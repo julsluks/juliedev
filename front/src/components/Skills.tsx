@@ -1,5 +1,7 @@
 'use client'
 
+import { useTheme } from '@/contexts/ThemeContext'
+
 interface SkillCategory {
     id: number
     title: string
@@ -8,6 +10,7 @@ interface SkillCategory {
 }
 
 export default function Skills() {
+    const { theme } = useTheme()
 
     const skillCategories: SkillCategory[] = [
         {
@@ -86,11 +89,17 @@ export default function Skills() {
     ]
 
     return (
-        <section id="skills" className="py-20 px-4 bg-gray-50">
+        <section id="skills" className={`py-20 px-4 transition-all duration-500 ${
+            theme === 'dark' ? 'bg-dark-surface' : 'bg-light-surface'
+        }`}>
             <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl font-bold text-gray-900 mb-4">Tecnologías & Habilidades</h2>
-                    <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                    <h2 className={`text-4xl font-bold mb-4 ${
+                        theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
+                    }`}>Tecnologías & Habilidades</h2>
+                    <p className={`text-xl max-w-2xl mx-auto ${
+                        theme === 'dark' ? 'text-dark-text-secondary' : 'text-light-text-secondary'
+                    }`}>
                         Las herramientas y tecnologías que domino para crear experiencias web excepcionales.
                     </p>
                 </div>
@@ -99,12 +108,16 @@ export default function Skills() {
                     {skillCategories.map((category) => (
                         <div
                             key={category.id}
-                            className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:transform hover:-translate-y-1"
+                            className={`rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:transform hover:-translate-y-1 ${
+                                theme === 'dark' ? 'bg-dark-background shadow-dark' : 'bg-light-background shadow-light'
+                            }`}
                         >
                             {/* Header de la categoría */}
                             <div className="text-center mb-6">
                                 <div className="text-4xl mb-3">{category.icon}</div>
-                                <h3 className="text-xl font-bold text-gray-900">{category.title}</h3>
+                                <h3 className={`text-xl font-bold ${
+                                    theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
+                                }`}>{category.title}</h3>
                             </div>
 
                             {/* Lista de habilidades */}
@@ -112,10 +125,18 @@ export default function Skills() {
                                 {category.skills.map((skill) => (
                                     <div
                                         key={skill}
-                                        className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors duration-200"
+                                        className={`flex items-center justify-between p-3 rounded-lg transition-colors duration-200 ${
+                                            theme === 'dark' 
+                                                ? 'bg-dark-muted hover:bg-dark-surface' 
+                                                : 'bg-light-muted hover:bg-blue-50'
+                                        }`}
                                     >
-                                        <span className="text-gray-700 font-medium">{skill}</span>
-                                        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                        <span className={`font-medium ${
+                                            theme === 'dark' ? 'text-dark-text-secondary' : 'text-light-text-secondary'
+                                        }`}>{skill}</span>
+                                        <div className={`w-2 h-2 rounded-full ${
+                                            theme === 'dark' ? 'bg-dark-primary' : 'bg-light-primary'
+                                        }`}></div>
                                     </div>
                                 ))}
                             </div>

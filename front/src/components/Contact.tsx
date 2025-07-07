@@ -2,8 +2,10 @@
 
 import { useState } from 'react'
 import { FaEnvelope, FaLinkedin, FaMapMarkerAlt, FaGithub } from 'react-icons/fa'
+import { useTheme } from '@/contexts/ThemeContext'
 
 export default function Contact() {
+    const { theme } = useTheme()
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -27,7 +29,9 @@ export default function Contact() {
     }
 
     return (
-        <section id="contact" className="py-20 px-4 bg-white">
+        <section id="contact" className={`py-20 px-4 transition-all duration-500 ${
+            theme === 'dark' ? 'bg-dark-background' : 'bg-light-background'
+        }`}>
             <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl font-bold text-gray-900 mb-4">Contacto</h2>

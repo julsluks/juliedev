@@ -1,5 +1,7 @@
 'use client'
 
+import { useTheme } from '@/contexts/ThemeContext'
+
 interface ExperienceItem {
     id: number
     title: string
@@ -9,29 +11,47 @@ interface ExperienceItem {
     type: 'work' | 'education'
 }
 
-const TimelineItem = ({ item, isLast }: { item: ExperienceItem, isLast: boolean }) => (
+const TimelineItem = ({ item, isLast, theme }: { item: ExperienceItem, isLast: boolean, theme: string }) => (
     <div className="relative flex items-start mb-8">
         {/* Línea vertical */}
         {!isLast && (
-            <div className="absolute left-4 top-8 w-0.5 h-full bg-blue-200"></div>
+            <div className={`absolute left-4 top-8 w-0.5 h-full ${
+                theme === 'dark' ? 'bg-dark-border' : 'bg-light-border'
+            }`}></div>
         )}
 
         {/* Punto del timeline */}
-        <div className="flex-shrink-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mr-4 relative z-10">
-            <div className="w-3 h-3 bg-white rounded-full"></div>
+        <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mr-4 relative z-10 ${
+            theme === 'dark' ? 'bg-dark-primary' : 'bg-light-primary'
+        }`}>
+            <div className={`w-3 h-3 rounded-full ${
+                theme === 'dark' ? 'bg-dark-background' : 'bg-light-background'
+            }`}></div>
         </div>
 
         {/* Contenido */}
-        <div className="flex-grow bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+        <div className={`flex-grow rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 ${
+            theme === 'dark' ? 'bg-dark-surface shadow-dark' : 'bg-light-background shadow-light'
+        }`}>
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                <h3 className="text-xl font-semibold text-gray-900">{item.title}</h3>
-                <span className="text-sm text-blue-600 font-medium">{item.period}</span>
+                <h3 className={`text-xl font-semibold ${
+                    theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
+                }`}>{item.title}</h3>
+                <span className={`text-sm font-medium ${
+                    theme === 'dark' ? 'text-dark-primary' : 'text-light-primary'
+                }`}>{item.period}</span>
             </div>
-            <h4 className="text-lg text-gray-700 mb-3">{item.company}</h4>
+            <h4 className={`text-lg mb-3 ${
+                theme === 'dark' ? 'text-dark-text-secondary' : 'text-light-text-secondary'
+            }`}>{item.company}</h4>
             <ul className="space-y-1">
                 {item.description.map((desc, index) => (
-                    <li key={`${item.id}-desc-${index}`} className="text-gray-600 flex items-start">
-                        <span className="text-blue-500 mr-2 mt-1.5 flex-shrink-0">•</span>
+                    <li key={`${item.id}-desc-${index}`} className={`flex items-start ${
+                        theme === 'dark' ? 'text-dark-text-muted' : 'text-light-text-muted'
+                    }`}>
+                        <span className={`mr-2 mt-1.5 flex-shrink-0 ${
+                            theme === 'dark' ? 'text-dark-secondary' : 'text-light-secondary'
+                        }`}>•</span>
                         {desc}
                     </li>
                 ))}
@@ -41,6 +61,7 @@ const TimelineItem = ({ item, isLast }: { item: ExperienceItem, isLast: boolean 
 )
 
 export default function Experience() {
+    const { theme } = useTheme()
 
     const experiences: ExperienceItem[] = [
         // Experiencia laboral
@@ -122,24 +143,33 @@ export default function Experience() {
     const education = experiences.filter(exp => exp.type === 'education')
 
     return (
-        <section id="experience" className="py-20 px-4 bg-white">
+        <section id="experience" className={`py-20 px-4 transition-all duration-500 ${
+            theme === 'dark' ? 'bg-dark-background' : 'bg-light-background'
+        }`}>
             <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl font-bold text-gray-900 mb-4">Experiencia & Educación</h2>
-                    <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                    <h2 className={`text-4xl font-bold mb-4 ${
+                        theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
+                    }`}>Experiencia & Educación</h2>
+                    <p className={`text-xl max-w-2xl mx-auto ${
+                        theme === 'dark' ? 'text-dark-text-secondary' : 'text-light-text-secondary'
+                    }`}>
                         Mi trayectoria profesional y formación académica en el mundo del desarrollo web.
                     </p>
                 </div>
 
                 {/* Experiencia Laboral */}
                 <div className="mb-16">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">💼 Experiencia Laboral</h3>
+                    <h3 className={`text-2xl font-bold mb-8 text-center ${
+                        theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
+                    }`}>💼 Experiencia Laboral</h3>
                     <div className="relative">
                         {workExperience.map((item, index) => (
                             <TimelineItem
                                 key={item.id}
                                 item={item}
                                 isLast={index === workExperience.length - 1}
+                                theme={theme}
                             />
                         ))}
                     </div>
@@ -147,13 +177,16 @@ export default function Experience() {
 
                 {/* Educación */}
                 <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">🎓 Educación</h3>
+                    <h3 className={`text-2xl font-bold mb-8 text-center ${
+                        theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
+                    }`}>🎓 Educación</h3>
                     <div className="relative">
                         {education.map((item, index) => (
                             <TimelineItem
                                 key={item.id}
                                 item={item}
                                 isLast={index === education.length - 1}
+                                theme={theme}
                             />
                         ))}
                     </div>
