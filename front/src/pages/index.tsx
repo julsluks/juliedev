@@ -1,7 +1,11 @@
-import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import Hero from '@/components/Hero'
+import Projects from '@/components/Projects'
+import Experience from '@/components/Experience'
+import Skills from '@/components/Skills'
+import Contact from '@/components/Contact'
 
 export default function Home() {
   const { t } = useTranslation('common')
@@ -9,12 +13,14 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Julie Villegas - Frontend Developer</title>
+        <title>{t('greeting')} | Portfolio</title>
         <meta name="description" content={t('description')} />
       </Head>
-      <main>
-        <Hero />
-      </main>
+      <Hero />
+      <Projects />
+      <Experience />
+      <Skills />
+      <Contact />
     </>
   )
 }
