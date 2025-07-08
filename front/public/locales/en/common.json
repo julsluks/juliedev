@@ -5,5 +5,15 @@
     "projects": "Projects",
     "experience": "Experience and Education",
     "skills": "Technologies and tools",
-    "language": "Language"
+    "language": "Language",
+    "theme": "Theme",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "nav": {
+        "home": "Home",
+        "projects": "Projects",
+        "skills": "Skills",
+        "experience": "Experience",
+        "contact": "Contact"
+    }
 }

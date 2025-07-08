@@ -1,7 +1,7 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
-// import Hero from '@/components/Hero'
+import Hero from '@/components/Hero'
 import Projects from '@/components/Projects'
 import Experience from '@/components/Experience'
 import Skills from '@/components/Skills'
@@ -17,7 +17,7 @@ export default function Home() {
         <meta name="description" content={t('description')} />
       </Head>
       <main>
-        {/* <Hero /> */}
+        <Hero />
         <Projects />
         <Experience />
         <Skills />

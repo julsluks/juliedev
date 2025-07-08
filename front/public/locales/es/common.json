@@ -5,5 +5,15 @@
     "projects": "Proyectos",
     "experience": "Experiencia y Educación",
     "skills": "Tecnologías y herramientas",
-    "language": "Idioma"
+    "language": "Idioma",
+    "theme": "Tema",
+    "darkMode": "Modo Oscuro",
+    "lightMode": "Modo Claro",
+    "nav": {
+        "home": "Inicio",
+        "projects": "Proyectos",
+        "skills": "Habilidades",
+        "experience": "Experiencia",
+        "contact": "Contacto"
+    }
 }

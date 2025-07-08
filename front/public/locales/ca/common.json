@@ -5,5 +5,15 @@
     "projects": "Projectes",
     "experience": "Experiència i Educació",
     "skills": "Tecnologies i eines",
-    "language": "Idioma"
+    "language": "Idioma",
+    "theme": "Tema",
+    "darkMode": "Mode Fosc",
+    "lightMode": "Mode Clar",
+    "nav": {
+        "home": "Inici",
+        "projects": "Projectes",
+        "skills": "Habilitats",
+        "experience": "Experiència",
+        "contact": "Contacte"
+    }
 }

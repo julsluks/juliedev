@@ -98,7 +98,7 @@ export default function Contact() {
                                     <div>
                                         <p className="text-gray-600">GitHub</p>
                                         <a
-                                            href="https://github.com/"
+                                            href="https://github.com/julsluks"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="text-gray-900 font-medium hover:text-blue-600 transition-colors"
