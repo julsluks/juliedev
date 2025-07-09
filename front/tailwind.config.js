@@ -19,6 +19,7 @@ module.exports = {
           text: {
             primary: '#1E293B',
             secondary: '#64748B',
+            tertiary: '#A1A1AA',
           },
         },
         dark: {
@@ -32,6 +33,7 @@ module.exports = {
           text: {
             primary: '#F8FAFC',
             secondary: '#CBD5E1',
+            tertiary: '#E2E8F0',
           },
         },
       },
