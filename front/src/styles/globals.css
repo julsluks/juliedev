@@ -10,3 +10,26 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Animaciones personalizadas */
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  animation: gradient 3s ease infinite;
+}
+
+.bg-300\% {
+  background-size: 300%;
+}
+
+/* Grid personalizado para el fondo */
+.grid-cols-15 {
+  grid-template-columns: repeat(15, minmax(0, 1fr));
+}

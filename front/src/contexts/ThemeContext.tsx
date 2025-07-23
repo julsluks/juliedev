@@ -1,12 +1,13 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState, ReactNode, useMemo } from 'react'
+import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react'
 
 type Theme = 'light' | 'dark'
 
 interface ThemeContextType {
     theme: Theme
     toggleTheme: () => void
+    isLoading: boolean
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
@@ -25,54 +26,62 @@ interface ThemeProviderProps {
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     const [theme, setTheme] = useState<Theme>('light')
-    const [mounted, setMounted] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
-    const toggleTheme = useMemo(() => {
-        return () => {
-            const newTheme = theme === 'light' ? 'dark' : 'light'
-            setTheme(newTheme)
+    // Toggle theme function - sin useMemo para evitar problemas
+    const toggleTheme = useCallback(() => {
+        setTheme(prevTheme => {
+            const newTheme = prevTheme === 'light' ? 'dark' : 'light'
+            
+            // Guardar en localStorage
             if (typeof window !== 'undefined') {
                 localStorage.setItem('theme', newTheme)
+                
+                // Actualizar clases del documento
                 document.documentElement.classList.remove('light', 'dark')
                 document.documentElement.classList.add(newTheme)
             }
-        }
-    }, [theme])
-
-    const value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme])
+            
+            return newTheme
+        })
+    }, [])
 
     // Inicializar tema
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const savedTheme = localStorage.getItem('theme') as Theme
+            
             if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
                 setTheme(savedTheme)
+                document.documentElement.classList.remove('light', 'dark')
                 document.documentElement.classList.add(savedTheme)
             } else {
                 // Detectar preferencia del sistema
                 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
                 const initialTheme = prefersDark ? 'dark' : 'light'
                 setTheme(initialTheme)
+                document.documentElement.classList.remove('light', 'dark')
                 document.documentElement.classList.add(initialTheme)
+                localStorage.setItem('theme', initialTheme)
             }
         }
-        setMounted(true)
+        setIsLoading(false)
     }, [])
 
     // Evitar hydration mismatch
-    if (!mounted) {
+    if (isLoading) {
         return (
-            <ThemeContext.Provider value={value}>
-                <div className="min-h-screen bg-white dark:bg-gray-900">
-                    {children}
+            <div className="min-h-screen bg-white dark:bg-gray-900">
+                <div className="flex items-center justify-center h-screen">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
                 </div>
-            </ThemeContext.Provider>
+            </div>
         )
     }
 
     return (
-        <ThemeContext.Provider value={value}>
-            <div className={theme}>
+        <ThemeContext.Provider value={{ theme, toggleTheme, isLoading }}>
+            <div className={theme === 'dark' ? 'dark' : ''}>
                 {children}
             </div>
         </ThemeContext.Provider>

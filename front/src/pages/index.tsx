@@ -13,14 +13,19 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>{t('greeting')} | Portfolio</title>
+        <title>{t('greeting').split(',')[1]?.trim() || 'Julie Villegas'} - {t('frontendDeveloper')}</title>
         <meta name="description" content={t('description')} />
+        <meta name="keywords" content="frontend developer, full stack, UX/UI, React, Next.js, TypeScript, desarrolladora frontend" />
+        <meta name="author" content="Julie Villegas" />
+        <meta property="og:title" content={`${t('greeting').split(',')[1]?.trim() || 'Julie Villegas'} - ${t('frontendDeveloper')}`} />
+        <meta property="og:description" content={t('description')} />
+        <meta property="og:type" content="website" />
       </Head>
       <main>
         <Hero />
-        <Projects />
-        <Experience />
+        <Projects />        
         <Skills />
+        <Experience />
         <Contact /> 
       </main>
     </>
