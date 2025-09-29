@@ -2,6 +2,8 @@
 
 import { useTheme } from '@/contexts/ThemeContext'
 import { useTranslation } from 'next-i18next'
+import { FaBriefcase, FaGraduationCap } from 'react-icons/fa'
+import { MdWorkOutline } from 'react-icons/md'
 
 interface ExperienceItem {
     id: number
@@ -36,22 +38,22 @@ const TimelineItem = ({ item, isLast, theme }: { item: ExperienceItem, isLast: b
         }`}>
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
                 <h3 className={`text-xl font-semibold ${
-                    theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
+                    theme === 'dark' ? 'text-white' : 'text-gray-900'
                 }`}>{item.title}</h3>
                 <span className={`text-sm font-medium ${
-                    theme === 'dark' ? 'text-dark-primary' : 'text-light-primary'
+                    theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
                 }`}>{item.period}</span>
             </div>
             <h4 className={`text-lg mb-3 ${
-                theme === 'dark' ? 'text-dark-text-secondary' : 'text-light-text-secondary'
+                theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
             }`}>{item.company}</h4>
             <ul className="space-y-1">
                 {item.description.map((desc, index) => (
                     <li key={`${item.id}-desc-${index}`} className={`flex items-start ${
-                        theme === 'dark' ? 'text-dark-text-muted' : 'text-light-text-muted'
+                        theme === 'dark' ? 'text-gray-400' : 'text-gray-700'
                     }`}>
                         <span className={`mr-2 mt-1.5 flex-shrink-0 ${
-                            theme === 'dark' ? 'text-dark-secondary' : 'text-light-secondary'
+                            theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
                         }`}>•</span>
                         {desc}
                     </li>
@@ -65,55 +67,39 @@ export default function Experience() {
     const { theme } = useTheme()
     const { t } = useTranslation('common')
 
+    // Función para obtener datos traducidos de experiencia
+    const getExperienceData = (id: number) => ({
+        title: t(`experience_${id}_title`),
+        company: t(`experience_${id}_company`),
+        period: t(`experience_${id}_period`),
+        description: [
+            t(`experience_${id}_desc_1`),
+            t(`experience_${id}_desc_2`),
+            t(`experience_${id}_desc_3`)
+        ]
+    })
+
     const experiences: ExperienceItem[] = [
-        // Experiencia laboral - Solo 2 trabajos principales
+        // Experiencia laboral
         {
             id: 1,
-            title: "Desarrolladora Full Stack",
-            company: "ACCELERALIA",
-            period: "2023 - Presente",
-            description: [
-                "Desarrollo de aplicaciones web con React y Node.js",
-                "Implementación de APIs RESTful y microservicios",
-                "Colaboración en equipos ágiles usando metodologías Scrum"
-            ],
+            ...getExperienceData(1),
             type: "work"
         },
         {
             id: 2,
-            title: "Frontend Developer",
-            company: "Storyville",
-            period: "2022 - 2023",
-            description: [
-                "Desarrollo de interfaces de usuario responsivas con Vue.js",
-                "Optimización de rendimiento y experiencia de usuario",
-                "Integración con APIs y servicios de terceros"
-            ],
+            ...getExperienceData(2),
             type: "work"
         },
         // Educación
         {
             id: 3,
-            title: "CFGS Desarrollo de Aplicaciones Web (DAW)",
-            company: "Centro de Formación Profesional",
-            period: "2020 - 2022",
-            description: [
-                "Desarrollo web full stack",
-                "Bases de datos y sistemas de gestión",
-                "Metodologías de desarrollo ágil"
-            ],
+            ...getExperienceData(3),
             type: "education"
         },
         {
             id: 4,
-            title: "CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)",
-            company: "Centro de Formación Profesional",
-            period: "2018 - 2020",
-            description: [
-                "Programación orientada a objetos",
-                "Desarrollo de aplicaciones móviles",
-                "Gestión de bases de datos"
-            ],
+            ...getExperienceData(4),
             type: "education"
         }
     ]
@@ -127,21 +113,27 @@ export default function Experience() {
         }`}>
             <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-16">
-                    <h2 className={`text-4xl font-bold mb-4 ${
-                        theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
-                    }`}>{t('experienceTitle')}</h2>
-                    <p className={`text-xl max-w-2xl mx-auto ${
-                        theme === 'dark' ? 'text-dark-text-secondary' : 'text-light-text-secondary'
+                    <h2 className={`text-4xl font-bold mb-4 flex items-center justify-center gap-3 ${
+                        theme === 'dark' ? 'text-white' : 'text-gray-900'
                     }`}>
-                        {t('experienceDescription')}
+                        <MdWorkOutline className="text-blue-600 dark:text-blue-400" />
+                        {t('experience_title')}
+                    </h2>
+                    <p className={`text-xl max-w-2xl mx-auto ${
+                        theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+                    }`}>
+                        {t('experience_subtitle')}
                     </p>
                 </div>
 
                 {/* Experiencia Laboral */}
                 <div className="mb-16">
-                    <h3 className={`text-2xl font-bold mb-8 text-center ${
-                        theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
-                    }`}>💼 {t('workExperience')}</h3>
+                    <h3 className={`text-2xl font-bold mb-8 text-center flex items-center justify-center gap-2 ${
+                        theme === 'dark' ? 'text-white' : 'text-gray-900'
+                    }`}>
+                        <FaBriefcase className="text-blue-600 dark:text-blue-400" />
+                        {t('experience_work_title')}
+                    </h3>
                     <div className="relative">
                         {workExperience.map((item, index) => (
                             <TimelineItem
@@ -156,9 +148,12 @@ export default function Experience() {
 
                 {/* Educación */}
                 <div>
-                    <h3 className={`text-2xl font-bold mb-8 text-center ${
-                        theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
-                    }`}>🎓 {t('education')}</h3>
+                    <h3 className={`text-2xl font-bold mb-8 text-center flex items-center justify-center gap-2 ${
+                        theme === 'dark' ? 'text-white' : 'text-gray-900'
+                    }`}>
+                        <FaGraduationCap className="text-green-600 dark:text-green-400" />
+                        {t('experience_education_title')}
+                    </h3>
                     <div className="relative">
                         {education.map((item, index) => (
                             <TimelineItem
