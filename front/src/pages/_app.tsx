@@ -7,9 +7,9 @@ import '../styles/globals.css'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+      <div className="h-screen bg-white dark:bg-gray-900 transition-colors duration-300 flex flex-col overflow-hidden">
         <Navbar />
-        <main className="pt-16">
+        <main className="flex-1 overflow-y-auto scroll-smooth">
           <Component {...pageProps} />
         </main>
       </div>

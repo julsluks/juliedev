@@ -20,17 +20,23 @@ const Navbar = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 10)
+            const mainElement = document.querySelector('main')
+            if (!mainElement) return
+
+            const scrollTop = mainElement.scrollTop
+            setScrolled(scrollTop > 10)
 
             // Detectar la sección activa
             const sections = ['home', 'projects', 'skills', 'experience', 'contact']
-            const scrollPosition = window.scrollY + 100
-
+            
             for (const section of sections) {
                 const element = document.getElementById(section === 'home' ? 'hero' : section)
                 if (element) {
-                    const { offsetTop, offsetHeight } = element
-                    if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+                    const elementRect = element.getBoundingClientRect()
+                    const mainRect = mainElement.getBoundingClientRect()
+                    
+                    // Si el elemento está visible en el viewport del main
+                    if (elementRect.top <= mainRect.top + 100 && elementRect.bottom > mainRect.top + 100) {
                         setActiveSection(section)
                         break
                     }
@@ -38,20 +44,51 @@ const Navbar = () => {
             }
         }
 
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
+        const mainElement = document.querySelector('main')
+        if (mainElement) {
+            mainElement.addEventListener('scroll', handleScroll)
+            return () => mainElement.removeEventListener('scroll', handleScroll)
+        }
     }, [])
 
     const scrollToSection = (sectionId: string) => {
         const targetId = sectionId === 'home' ? 'hero' : sectionId
         const element = document.getElementById(targetId)
+        const mainElement = document.querySelector('main')
 
-        if (element) {
-            const offsetTop = element.offsetTop - 80 // Ajuste para el navbar fijo
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            })
+        if (element && mainElement) {
+            // Añadir clase de transición para efecto visual
+            mainElement.style.scrollBehavior = 'smooth'
+            
+            // Calculamos la posición relativa al contenedor main
+            const elementRect = element.getBoundingClientRect()
+            const mainRect = mainElement.getBoundingClientRect()
+            const scrollTop = mainElement.scrollTop
+            const targetPosition = elementRect.top - mainRect.top + scrollTop
+
+            // Scroll suave con animación personalizada
+            const startPosition = mainElement.scrollTop
+            const distance = targetPosition - startPosition
+            const duration = 350 // 350ms para una transición más rápida e inmediata
+            let startTime: number | null = null
+
+            const animation = (currentTime: number) => {
+                startTime ??= currentTime
+                const timeElapsed = currentTime - startTime
+                const run = easeInOutQuad(timeElapsed, startPosition, distance, duration)
+                mainElement.scrollTop = run
+                if (timeElapsed < duration) requestAnimationFrame(animation)
+            }
+
+            // Función de easing para una transición más natural
+            const easeInOutQuad = (t: number, b: number, c: number, d: number) => {
+                t /= d / 2
+                if (t < 1) return c / 2 * t * t + b
+                t--
+                return -c / 2 * (t * (t - 2) - 1) + b
+            }
+
+            requestAnimationFrame(animation)
         }
         setIsOpen(false)
     }
@@ -73,13 +110,13 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className={`fixed w-full z-50 transition-all duration-500 ${scrolled
-                ? 'bg-light-background/95 dark:bg-dark-background/95 backdrop-blur-xl shadow-lg border-b border-light-border/20 dark:border-dark-border/20'
+            className={`sticky top-0 w-full z-50 transition-all duration-500 ${scrolled
+                ? 'bg-light-background/95 dark:bg-dark-background/95 backdrop-blur-xl shadow-lg'
                 : 'bg-light-background/80 dark:bg-dark-background/80 backdrop-blur-md'
                 }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
+                <div className="flex items-center justify-between py-3">
                     {/* Logo with enhanced effects */}
                     <motion.button
                         onClick={() => scrollToSection('home')}
@@ -88,11 +125,11 @@ const Navbar = () => {
                         whileTap={{ scale: 0.95 }}
                     >
                         <motion.div 
-                            className="relative flex items-center justify-center w-20 h-10 rounded-xl bg-gradient-to-br from-light-primary/10 to-light-secondary/10 dark:from-dark-primary/10 dark:to-dark-secondary/10 group-hover:from-light-primary/20 group-hover:to-light-secondary/20 dark:group-hover:from-dark-primary/20 dark:group-hover:to-dark-secondary/20 transition-all duration-300 shadow-lg group-hover:shadow-xl"
+                            className="relative flex items-center justify-center w-16 h-8 rounded-lg bg-gradient-to-br from-light-primary/10 to-light-secondary/10 dark:from-dark-primary/10 dark:to-dark-secondary/10 group-hover:from-light-primary/20 group-hover:to-light-secondary/20 dark:group-hover:from-dark-primary/20 dark:group-hover:to-dark-secondary/20 transition-all duration-300 shadow-lg group-hover:shadow-xl"
                             whileHover={{ rotate: [0, -5, 5, 0] }}
                             transition={{ duration: 0.5 }}
                         >
-                            <span className="text-xl font-bold bg-gradient-to-r from-light-primary via-light-secondary to-light-primary dark:from-dark-primary dark:via-dark-secondary dark:to-dark-primary bg-clip-text text-transparent animate-pulse">
+                            <span className="text-lg font-bold bg-gradient-to-r from-light-primary via-light-secondary to-light-primary dark:from-dark-primary dark:via-dark-secondary dark:to-dark-primary bg-clip-text text-transparent animate-pulse">
                                 {"<JV/>"}
                             </span>
                             {/* Glow effect */}

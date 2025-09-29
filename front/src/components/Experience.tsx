@@ -1,6 +1,7 @@
 'use client'
 
 import { useTheme } from '@/contexts/ThemeContext'
+import { useTranslation } from 'next-i18next'
 
 interface ExperienceItem {
     id: number
@@ -62,9 +63,10 @@ const TimelineItem = ({ item, isLast, theme }: { item: ExperienceItem, isLast: b
 
 export default function Experience() {
     const { theme } = useTheme()
+    const { t } = useTranslation('common')
 
     const experiences: ExperienceItem[] = [
-        // Experiencia laboral
+        // Experiencia laboral - Solo 2 trabajos principales
         {
             id: 1,
             title: "Desarrolladora Full Stack",
@@ -89,21 +91,9 @@ export default function Experience() {
             ],
             type: "work"
         },
-        {
-            id: 3,
-            title: "Web Developer",
-            company: "Egar10",
-            period: "2021 - 2022",
-            description: [
-                "Desarrollo de sitios web corporativos y e-commerce",
-                "Mantenimiento y actualización de sistemas existentes",
-                "Soporte técnico a clientes"
-            ],
-            type: "work"
-        },
         // Educación
         {
-            id: 4,
+            id: 3,
             title: "CFGS Desarrollo de Aplicaciones Web (DAW)",
             company: "Centro de Formación Profesional",
             period: "2020 - 2022",
@@ -115,7 +105,7 @@ export default function Experience() {
             type: "education"
         },
         {
-            id: 5,
+            id: 4,
             title: "CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)",
             company: "Centro de Formación Profesional",
             period: "2018 - 2020",
@@ -125,17 +115,6 @@ export default function Experience() {
                 "Gestión de bases de datos"
             ],
             type: "education"
-        },
-        {
-            id: 6,
-            title: "Bachillerato",
-            company: "Instituto de Educación Secundaria",
-            period: "2016 - 2018",
-            description: [
-                "Bachillerato científico-tecnológico",
-                "Bases de matemáticas y ciencias"
-            ],
-            type: "education"
         }
     ]
 
@@ -143,18 +122,18 @@ export default function Experience() {
     const education = experiences.filter(exp => exp.type === 'education')
 
     return (
-        <section id="experience" className={`py-20 px-4 transition-all duration-500 ${
+        <section id="experience" className={`min-h-screen py-20 px-4 transition-all duration-500 scroll-mt-20 flex items-center ${
             theme === 'dark' ? 'bg-dark-background' : 'bg-light-background'
         }`}>
             <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-16">
                     <h2 className={`text-4xl font-bold mb-4 ${
                         theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
-                    }`}>Experiencia & Educación</h2>
+                    }`}>{t('experienceTitle')}</h2>
                     <p className={`text-xl max-w-2xl mx-auto ${
                         theme === 'dark' ? 'text-dark-text-secondary' : 'text-light-text-secondary'
                     }`}>
-                        Mi trayectoria profesional y formación académica en el mundo del desarrollo web.
+                        {t('experienceDescription')}
                     </p>
                 </div>
 
@@ -162,7 +141,7 @@ export default function Experience() {
                 <div className="mb-16">
                     <h3 className={`text-2xl font-bold mb-8 text-center ${
                         theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
-                    }`}>💼 Experiencia Laboral</h3>
+                    }`}>💼 {t('workExperience')}</h3>
                     <div className="relative">
                         {workExperience.map((item, index) => (
                             <TimelineItem
@@ -179,7 +158,7 @@ export default function Experience() {
                 <div>
                     <h3 className={`text-2xl font-bold mb-8 text-center ${
                         theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
-                    }`}>🎓 Educación</h3>
+                    }`}>🎓 {t('education')}</h3>
                     <div className="relative">
                         {education.map((item, index) => (
                             <TimelineItem

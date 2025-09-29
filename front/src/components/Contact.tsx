@@ -41,7 +41,7 @@ export default function Contact() {
     }
 
     return (
-        <section id="contact" className={`py-20 px-4 transition-all duration-500 ${
+        <section id="contact" className={`min-h-screen py-20 px-4 transition-all duration-500 scroll-mt-20 flex items-center ${
             theme === 'dark' ? 'bg-dark-background' : 'bg-light-background'
         }`}>
             <div className="max-w-6xl mx-auto">
@@ -60,47 +60,47 @@ export default function Contact() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        ¿Tienes un proyecto en mente? ¡Trabajemos juntos para hacerlo realidad!
+                        {t('contactSubtitle')}
                     </motion.p>
                     
                     {/* Email prominente con botón de copiar mejorado */}
                     <motion.div 
-                        className="inline-flex items-center gap-4 px-6 py-4 bg-light-primary dark:bg-dark-primary text-white rounded-lg shadow-lg mb-6"
+                        className="flex flex-col items-center gap-4 mb-6"
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
                     >
-                        <FaEnvelope className="text-xl" />
-                        <span className="text-lg font-semibold">{t('email')}</span>
+                        <div className="flex items-center gap-4 px-6 py-4 bg-light-primary dark:bg-dark-primary text-white rounded-lg shadow-lg">
+                            <FaEnvelope className="text-xl" />
+                            <span className="text-lg font-semibold">{t('email')}</span>
+                            <motion.button
+                                onClick={copyEmail}
+                                className="flex items-center gap-2 px-3 py-2 bg-white/20 hover:bg-white/30 rounded-md transition-colors"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                {emailCopied ? (
+                                    <>
+                                        <FaCheck className="text-green-300" />
+                                        <span className="text-sm">{t('emailCopied')}</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <FaCopy />
+                                        <span className="text-sm">{t('copyEmail')}</span>
+                                    </>
+                                )}
+                            </motion.button>
+                        </div>
+                        
                         <motion.button
-                            onClick={copyEmail}
-                            className="flex items-center gap-2 px-3 py-2 bg-white/20 hover:bg-white/30 rounded-md transition-colors"
+                            onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
+                            className="px-8 py-3 bg-light-secondary dark:bg-dark-secondary text-white text-lg font-semibold rounded-lg hover:bg-light-primary dark:hover:bg-dark-primary transition-colors duration-300"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >
-                            {emailCopied ? (
-                                <>
-                                    <FaCheck className="text-green-300" />
-                                    <span className="text-sm">{t('emailCopied')}</span>
-                                </>
-                            ) : (
-                                <>
-                                    <FaCopy />
-                                    <span className="text-sm">{t('copyEmail')}</span>
-                                </>
-                            )}
+                            {t('workTogether')}
                         </motion.button>
-                    </motion.div>
-                    
-                    <motion.div
-                        className="inline-block px-8 py-3 bg-light-secondary dark:bg-dark-secondary text-white text-lg font-semibold rounded-lg hover:bg-light-primary dark:hover:bg-dark-primary transition-colors duration-300 cursor-pointer"
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.6 }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        💼 Trabajemos juntos
                     </motion.div>
                 </div>
 
@@ -114,7 +114,7 @@ export default function Contact() {
                     >
                         <div>
                             <h3 className="text-2xl font-bold text-light-text-primary dark:text-dark-text-primary mb-6">
-                                Información de Contacto
+                                {t('contactInfo')}
                             </h3>
                             <div className="space-y-4">
                                 <div className="flex items-center space-x-4">
@@ -146,8 +146,8 @@ export default function Contact() {
                                         <FaMapMarkerAlt className="text-light-primary dark:text-dark-primary text-xl" />
                                     </div>
                                     <div>
-                                        <p className="text-light-text-secondary dark:text-dark-text-secondary">Ubicación</p>
-                                        <p className="text-light-text-primary dark:text-dark-text-primary font-medium">Barcelona, España</p>
+                                        <p className="text-light-text-secondary dark:text-dark-text-secondary">{t('location')}</p>
+                                        <p className="text-light-text-primary dark:text-dark-text-primary font-medium">{t('locationValue')}</p>
                                     </div>
                                 </div>
 
@@ -191,28 +191,29 @@ export default function Contact() {
                         <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6">
                             <div className="flex items-center space-x-3">
                                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                                <span className="text-green-800 dark:text-green-300 font-semibold">Disponible para nuevos proyectos</span>
+                                <span className="text-green-800 dark:text-green-300 font-semibold">{t('available')}</span>
                             </div>
                             <p className="text-green-700 dark:text-green-400 mt-2">
-                                Actualmente acepto proyectos freelance y oportunidades laborales en modalidad remota o híbrida.
+                                {t('availableDesc')}
                             </p>
                         </div>
                     </motion.div>
 
                     {/* Formulario de contacto */}
                     <motion.div
+                        id="contact-form"
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6 }}
                     >
                         <h3 className="text-2xl font-bold text-light-text-primary dark:text-dark-text-primary mb-6">
-                            Envíame un mensaje
+                            {t('sendMessageTitle')}
                         </h3>
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label htmlFor="name" className="block text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary mb-2">
-                                        Nombre *
+                                        {t('name')} {t('required')}
                                     </label>
                                     <input
                                         type="text"
@@ -222,12 +223,12 @@ export default function Contact() {
                                         value={formData.name}
                                         onChange={handleChange}
                                         className="w-full px-4 py-3 border border-light-border dark:border-dark-border rounded-lg focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary focus:border-transparent outline-none transition-all bg-light-surface dark:bg-dark-surface text-light-text-primary dark:text-dark-text-primary"
-                                        placeholder="Tu nombre"
+                                        placeholder={t('namePlaceholder')}
                                     />
                                 </div>
                                 <div>
                                     <label htmlFor="email" className="block text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary mb-2">
-                                        Email *
+                                        Email {t('required')}
                                     </label>
                                     <input
                                         type="email"
@@ -237,14 +238,14 @@ export default function Contact() {
                                         value={formData.email}
                                         onChange={handleChange}
                                         className="w-full px-4 py-3 border border-light-border dark:border-dark-border rounded-lg focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary focus:border-transparent outline-none transition-all bg-light-surface dark:bg-dark-surface text-light-text-primary dark:text-dark-text-primary"
-                                        placeholder="tu.email@ejemplo.com"
+                                        placeholder={t('emailPlaceholder')}
                                     />
                                 </div>
                             </div>
                             
                             <div>
                                 <label htmlFor="subject" className="block text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary mb-2">
-                                    Asunto *
+                                    {t('subject')} {t('required')}
                                 </label>
                                 <input
                                     type="text"
@@ -254,13 +255,13 @@ export default function Contact() {
                                     value={formData.subject}
                                     onChange={handleChange}
                                     className="w-full px-4 py-3 border border-light-border dark:border-dark-border rounded-lg focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary focus:border-transparent outline-none transition-all bg-light-surface dark:bg-dark-surface text-light-text-primary dark:text-dark-text-primary"
-                                    placeholder="¿En qué puedo ayudarte?"
+                                    placeholder={t('subjectPlaceholder')}
                                 />
                             </div>
                             
                             <div>
                                 <label htmlFor="message" className="block text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary mb-2">
-                                    Mensaje *
+                                    {t('message')} {t('required')}
                                 </label>
                                 <textarea
                                     id="message"
@@ -270,17 +271,17 @@ export default function Contact() {
                                     value={formData.message}
                                     onChange={handleChange}
                                     className="w-full px-4 py-3 border border-light-border dark:border-dark-border rounded-lg focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary focus:border-transparent outline-none transition-all bg-light-surface dark:bg-dark-surface text-light-text-primary dark:text-dark-text-primary resize-none"
-                                    placeholder="Cuéntame sobre tu proyecto..."
+                                    placeholder={t('messagePlaceholder')}
                                 />
                             </div>
                             
                             <motion.button
                                 type="submit"
-                                className="w-full px-6 py-4 bg-light-primary dark:bg-dark-primary text-white font-semibold rounded-lg hover:bg-light-secondary dark:hover:bg-dark-secondary transition-colors duration-300"
-                                whileHover={{ scale: 1.02 }}
+                                className="w-full px-6 py-4 bg-light-primary dark:bg-dark-primary text-white font-semibold rounded-lg hover:bg-light-secondary dark:hover:bg-dark-secondary transition-colors duration-300 shadow-lg hover:shadow-xl"
+                                whileHover={{ scale: 1.02, y: -2 }}
                                 whileTap={{ scale: 0.98 }}
                             >
-                                Enviar mensaje
+                                {t('sendButton')}
                             </motion.button>
                         </form>
                     </motion.div>
