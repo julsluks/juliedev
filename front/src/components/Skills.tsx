@@ -4,6 +4,45 @@ import { useTranslation } from 'next-i18next'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { useTheme } from '@/contexts/ThemeContext'
+import { 
+    SiReact, 
+    SiVuedotjs, 
+    SiNodedotjs, 
+    SiMongodb, 
+    SiMysql, 
+    SiTailwindcss, 
+    SiLaravel, 
+    SiNextdotjs,
+    SiTypescript,
+    SiJavascript,
+    SiHtml5,
+    SiCss3,
+    SiAngular,
+    SiPhp,
+    SiPostgresql,
+    SiGraphql,
+    SiGit,
+    SiDocker,
+    SiAmazon,
+    SiFigma,
+    SiWebpack,
+    SiVite,
+    SiJest,
+    SiCypress
+} from 'react-icons/si'
+import { 
+    FaTools, 
+    FaCode, 
+    FaServer, 
+    FaUsers, 
+    FaPuzzlePiece, 
+    FaComments, 
+    FaBookOpen, 
+    FaSync, 
+    FaCrown, 
+    FaLightbulb, 
+    FaStar 
+} from 'react-icons/fa'
 
 interface SkillItem {
     name: string
@@ -13,12 +52,20 @@ interface SkillItem {
 interface SkillCategory {
     id: string
     titleKey: string
-    icon: string
+    icon: React.ReactNode
     skills: SkillItem[]
 }
 
 // Componente de Pill interactiva y arrastrable
-const DraggablePill = ({ skill, index }: { skill: SkillItem; index: number }) => {
+const DraggablePill = ({ 
+    skill, 
+    index, 
+    getSkillIcon 
+}: { 
+    skill: SkillItem; 
+    index: number; 
+    getSkillIcon: (skillName: string) => React.ReactNode 
+}) => {
     const [clickCount, setClickCount] = useState(0)
 
     const handleClick = () => {
@@ -110,7 +157,7 @@ const DraggablePill = ({ skill, index }: { skill: SkillItem; index: number }) =>
                         transition: { duration: 0.4 }
                     }}
                 >
-                    {skill.icon}
+                    {getSkillIcon(skill.name)}
                 </motion.span>
                 <span className="font-semibold text-gray-800 dark:text-gray-200 tracking-wide">
                     {skill.name}
@@ -154,71 +201,121 @@ export default function Skills() {
     const { theme } = useTheme()
     const [activeCategory, setActiveCategory] = useState<string>('frontend')
 
+    // Función para obtener el icono correcto de cada skill
+    const getSkillIcon = (skillName: string) => {
+        const iconSize = "w-5 h-5"
+        const skillIcons: { [key: string]: React.ReactNode } = {
+            'React': <SiReact className={`${iconSize} text-[#61DAFB]`} />,
+            'Vue.js': <SiVuedotjs className={`${iconSize} text-[#4FC08D]`} />,
+            'Node.js': <SiNodedotjs className={`${iconSize} text-[#339933]`} />,
+            'TypeScript': <SiTypescript className={`${iconSize} text-[#3178C6]`} />,
+            'JavaScript': <SiJavascript className={`${iconSize} text-[#F7DF1E]`} />,
+            'Angular': <SiAngular className={`${iconSize} text-[#DD0031]`} />,
+            'Next.js': <SiNextdotjs className={`${iconSize} text-[#000000] dark:text-white`} />,
+            'Tailwind CSS': <SiTailwindcss className={`${iconSize} text-[#06B6D4]`} />,
+            'Laravel': <SiLaravel className={`${iconSize} text-[#FF2D20]`} />,
+            'PHP': <SiPhp className={`${iconSize} text-[#777BB4]`} />,
+            'MySQL': <SiMysql className={`${iconSize} text-[#4479A1]`} />,
+            'PostgreSQL': <SiPostgresql className={`${iconSize} text-[#336791]`} />,
+            'MongoDB': <SiMongodb className={`${iconSize} text-[#47A248]`} />,
+            'GraphQL': <SiGraphql className={`${iconSize} text-[#E10098]`} />,
+            'Git': <SiGit className={`${iconSize} text-[#F05032]`} />,
+            'Docker': <SiDocker className={`${iconSize} text-[#2496ED]`} />,
+            'AWS': <SiAmazon className={`${iconSize} text-[#FF9900]`} />,
+            'Figma': <SiFigma className={`${iconSize} text-[#F24E1E]`} />,
+            'Webpack': <SiWebpack className={`${iconSize} text-[#8DD6F9]`} />,
+            'Vite': <SiVite className={`${iconSize} text-[#646CFF]`} />,
+            'Jest': <SiJest className={`${iconSize} text-[#C21325]`} />,
+            'Cypress': <SiCypress className={`${iconSize} text-[#17202C]`} />,
+            'API REST': <FaServer className={`${iconSize} text-[#4285F4]`} />,
+            'HTML5': <SiHtml5 className={`${iconSize} text-[#E34F26]`} />,
+            'CSS3': <SiCss3 className={`${iconSize} text-[#1572B6]`} />
+        }
+        
+        return skillIcons[skillName] || <FaCode className={`${iconSize} text-gray-500`} />
+    }
+
+    // Función para obtener el icono de cada soft skill
+    const getSoftSkillIcon = (skillKey: string) => {
+        const iconSize = "w-5 h-5"
+        const softSkillIcons: { [key: string]: React.ReactNode } = {
+            'teamwork': <FaUsers className={`${iconSize} text-[#4F46E5]`} />,
+            'problemSolving': <FaPuzzlePiece className={`${iconSize} text-[#059669]`} />,
+            'communication': <FaComments className={`${iconSize} text-[#3B82F6]`} />,
+            'continuousLearning': <FaBookOpen className={`${iconSize} text-[#7C3AED]`} />,
+            'agileMethodologies': <FaSync className={`${iconSize} text-[#DC2626]`} />,
+            'leadership': <FaCrown className={`${iconSize} text-[#F59E0B]`} />,
+            'creativity': <FaLightbulb className={`${iconSize} text-[#EAB308]`} />,
+            'adaptability': <FaStar className={`${iconSize} text-[#EC4899]`} />
+        }
+        
+        return softSkillIcons[skillKey] || <FaCode className={`${iconSize} text-gray-500`} />
+    }
+
     const skillCategories: SkillCategory[] = [
         {
             id: 'frontend',
             titleKey: 'skillsFrontend',
-            icon: '⚛️',
+            icon: <FaCode className="w-6 h-6 text-[#61DAFB]" />,
             skills: [
-                { name: 'React', icon: '⚛️' },
-                { name: 'Vue.js', icon: '🟢' },
-                { name: 'Node.js', icon: '�' },
-                { name: 'TypeScript', icon: '�' },
-                { name: 'JavaScript', icon: '🟨' },
-                { name: 'Angular', icon: '�️' },
-                { name: 'Next.js', icon: '▲' },
-                { name: 'Tailwind CSS', icon: '�' }
+                { name: 'React', icon: '' },
+                { name: 'Vue.js', icon: '' },
+                { name: 'TypeScript', icon: '' },
+                { name: 'JavaScript', icon: '' },
+                { name: 'Angular', icon: '' },
+                { name: 'Next.js', icon: '' },
+                { name: 'Tailwind CSS', icon: '' },
+                { name: 'HTML5', icon: '' },
+                { name: 'CSS3', icon: '' }
             ]
         },
         {
             id: 'backend',
             titleKey: 'skillsBackend',
-            icon: '🔧',
+            icon: <FaServer className="w-6 h-6 text-[#339933]" />,
             skills: [
-                { name: 'Node.js', icon: '�' },
-                { name: 'Laravel', icon: '�' },
-                { name: 'PHP', icon: '�' },
-                { name: 'API REST', icon: '🔗' },
-                { name: 'MySQL', icon: '🗄️' },
-                { name: 'PostgreSQL', icon: '🐘' },
-                { name: 'MongoDB', icon: '🍃' },
-                { name: 'GraphQL', icon: '📊' }
+                { name: 'Node.js', icon: '' },
+                { name: 'Laravel', icon: '' },
+                { name: 'PHP', icon: '' },
+                { name: 'API REST', icon: '' },
+                { name: 'MySQL', icon: '' },
+                { name: 'PostgreSQL', icon: '' },
+                { name: 'MongoDB', icon: '' },
+                { name: 'GraphQL', icon: '' }
             ]
         },
         {
             id: 'tools',
             titleKey: 'skillsTools',
-            icon: '�️',
+            icon: <FaTools className="w-6 h-6 text-[#FF9900]" />,
             skills: [
-                { name: 'Git', icon: '📚' },
-                { name: 'Docker', icon: '🐋' },
-                { name: 'AWS', icon: '☁️' },
-                { name: 'Figma', icon: '🎨' },
-                { name: 'Webpack', icon: '📦' },
-                { name: 'Vite', icon: '⚡' },
-                { name: 'Jest', icon: '🃏' },
-                { name: 'Cypress', icon: '🌲' }
+                { name: 'Git', icon: '' },
+                { name: 'Docker', icon: '' },
+                { name: 'AWS', icon: '' },
+                { name: 'Figma', icon: '' },
+                { name: 'Webpack', icon: '' },
+                { name: 'Vite', icon: '' },
+                { name: 'Jest', icon: '' },
+                { name: 'Cypress', icon: '' }
             ]
         }
     ]
 
     const softSkills = [
-        { key: 'teamwork', icon: '🤝' },
-        { key: 'problemSolving', icon: '🧩' },
-        { key: 'communication', icon: '💬' },
-        { key: 'continuousLearning', icon: '📚' },
-        { key: 'agileMethodologies', icon: '🔄' },
-        { key: 'leadership', icon: '👑' },
-        { key: 'creativity', icon: '💡' },
-        { key: 'adaptability', icon: '🌟' }
+        { key: 'teamwork', icon: '' },
+        { key: 'problemSolving', icon: '' },
+        { key: 'communication', icon: '' },
+        { key: 'continuousLearning', icon: '' },
+        { key: 'agileMethodologies', icon: '' },
+        { key: 'leadership', icon: '' },
+        { key: 'creativity', icon: '' },
+        { key: 'adaptability', icon: '' }
     ]
 
     return (
         <section id="skills" className={`relative min-h-screen py-20 px-4 transition-all duration-500 scroll-mt-20 overflow-hidden flex items-center ${theme === 'dark' ? 'bg-dark-background' : 'bg-light-background'
             }`}>
-            {/* Fondo con círculos e iluminación por toda la página */}
             <div className="absolute inset-0 overflow-hidden">
-                {/* Círculos decorativos grandes por toda la página */}
                 {Array.from({ length: 20 }, (_, i) => (
                     <motion.div
                         key={`page-circle-bg-${i}`}
@@ -246,7 +343,6 @@ export default function Skills() {
                     />
                 ))}
 
-                {/* Efectos de iluminación ambiental */}
                 <div className="absolute top-0 left-0 w-full h-full">
                     <div className="absolute top-20 left-20 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
                     <div className="absolute top-40 right-20 w-80 h-80 bg-purple-400/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
@@ -302,7 +398,7 @@ export default function Skills() {
 
                     {/* Skills Pills - Sin círculos locales */}
                     <motion.div
-                        className="relative min-h-[400px] p-8"
+                        className="relative p-8"
                         key={activeCategory}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -313,7 +409,7 @@ export default function Skills() {
                             {skillCategories
                                 .find(cat => cat.id === activeCategory)
                                 ?.skills.map((skill, index) => (
-                                    <DraggablePill key={skill.name} skill={skill} index={index} />
+                                    <DraggablePill key={skill.name} skill={skill} index={index} getSkillIcon={getSkillIcon} />
                                 ))}
                         </div>
                     </motion.div>
@@ -376,7 +472,7 @@ export default function Skills() {
                                                 transition: { duration: 0.6 }
                                             }}
                                         >
-                                            {skill.icon}
+                                            {getSoftSkillIcon(skill.key)}
                                         </motion.span>
                                         <span className="font-medium text-light-text-primary dark:text-dark-text-primary">
                                             {t(skill.key)}
