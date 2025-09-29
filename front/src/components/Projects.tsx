@@ -17,35 +17,33 @@ export default function Projects() {
     const { theme } = useTheme()
     const { t } = useTranslation('common')
 
-    // Configuración de proyectos con claves de traducción
     const projectsConfig = [
         {
             id: 1,
-            key: "1", // Clave para las traducciones
-            technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-            demoLink: "https://demo.com",
+            key: "1",
+            technologies: ["Vue", "Node.js", "MongoDB", "Firebase", "MySQL"],
+            demoLink: "https://drive.google.com/file/d/1y02Yq1GE_BuVvkM1OaHGyEYysEYibbRt/view?usp=sharing",
             repoLink: "https://github.com/julsluks/trf-ConexusHub",
-            image: "/images/projects/ecommerce.jpg" // Ruta de la imagen
+            image: "/images/projects/conexus-hub.png" 
         },
         {
             id: 2,
             key: "2",
-            technologies: ["Vue.js", "Firebase", "Tailwind CSS"],
-            demoLink: "https://demo.com",
+            technologies: ["Vue.js", "Tailwind CSS", "Unity", "C#", "Python"],
+            demoLink: "https://www.youtube.com/watch?v=AOM92qPPtt0",
             repoLink: "https://github.com/julsluks/tr-game-HighLink",
-            image: "/images/projects/task-manager.jpg"
+            image: "/images/projects/high-link.png"
         },
         {
             id: 3,
             key: "3",
-            technologies: ["Next.js", "Three.js", "TypeScript", "Tailwind CSS"],
-            demoLink: "https://demo.com",
+            technologies: ["Phaser.js", "Laravel", "React", "Node.js", "Next.js"],
+            demoLink: "https://drive.google.com/file/d/1LBWqpKjoQKpaOUaVtSpKrkM9p9Om5a6i/view?usp=sharing",
             repoLink: "https://github.com/julsluks/trf-ChromaticBond",
-            image: "/images/projects/portfolio.jpg"
-        }
+            image: "/images/projects/chromatic-bond.png"
+        }   
     ]
 
-    // Función para obtener los datos traducidos de un proyecto
     const getProjectData = (projectKey: string) => {
         const title = t(`project_${projectKey}_title`)
         const description = t(`project_${projectKey}_description`)
@@ -57,12 +55,12 @@ export default function Projects() {
     }
 
     return (
-        <section id="projects" className={`min-h-screen py-20 px-4 transition-theme scroll-mt-20 flex items-center ${
+        <section id="projects" className={`min-h-screen py-8 px-4 transition-theme scroll-mt-20 flex items-center ${
             theme === 'dark' ? 'bg-dark-surface' : 'bg-light-surface'
         }`}>
             <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-16">
-                    <h2 className={`text-4xl font-bold mb-4 ${
+                    <h2 className={`text-6xl font-bold mb-4 ${
                         theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
                     }`}>{t('projectsTitle')}</h2>
                     <p className={`text-xl max-w-2xl mx-auto ${
