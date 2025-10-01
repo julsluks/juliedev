@@ -52,7 +52,7 @@ const TimelineItem = ({ item, isLast, theme }: { item: ExperienceItem, isLast: b
                     <li key={`${item.id}-desc-${index}`} className={`flex items-start ${
                         theme === 'dark' ? 'text-gray-400' : 'text-gray-700'
                     }`}>
-                        <span className={`mr-2 mt-1.5 flex-shrink-0 ${
+                        <span className={`mr-2 mt-0.5 flex-shrink-0 ${
                             theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
                         }`}>•</span>
                         {desc}
@@ -67,17 +67,32 @@ export default function Experience() {
     const { theme } = useTheme()
     const { t } = useTranslation('common')
 
-    // Función para obtener datos traducidos de experiencia
-    const getExperienceData = (id: number) => ({
-        title: t(`experience_${id}_title`),
-        company: t(`experience_${id}_company`),
-        period: t(`experience_${id}_period`),
-        description: [
-            t(`experience_${id}_desc_1`),
-            t(`experience_${id}_desc_2`),
-            t(`experience_${id}_desc_3`)
-        ]
-    })
+    // Función para obtener datos traducidos de experiencia con número dinámico de descripciones
+    const getExperienceData = (id: number) => {
+        const descriptions = []
+        let descIndex = 1
+        
+        // Obtener todas las descripciones disponibles dinámicamente
+        while (true) {
+            const descKey = `experience_${id}_desc_${descIndex}`
+            const descValue = t(descKey)
+            
+            // Si la traducción devuelve la misma clave, significa que no existe
+            if (descValue === descKey) {
+                break
+            }
+            
+            descriptions.push(descValue)
+            descIndex++
+        }
+        
+        return {
+            title: t(`experience_${id}_title`),
+            company: t(`experience_${id}_company`),
+            period: t(`experience_${id}_period`),
+            description: descriptions
+        }
+    }
 
     const experiences: ExperienceItem[] = [
         // Experiencia laboral
