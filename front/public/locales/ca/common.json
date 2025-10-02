@@ -17,7 +17,7 @@
     "location": "Ubicació",
     "locationValue": "Barcelona, Catalunya",
     "available": "Disponible per a nous projectes",
-    "availableDesc": "Actualment accepto projectes freelance i oportunitats laborals en modalitat remota o híbrida.",
+    "availableDesc": "Actualment accepto projectes freelance i oportunitats laborals en modalitat presencial, remota o híbrida.",
     "workTogether": "💼 Treballem junts",
     "projectIdea": "Tens un projecte en ment? Treballem plegats per fer-lo realitat!",
     "sendMessage": "Envia'm un missatge",
@@ -99,5 +99,12 @@
         "skills": "Habilitats",
         "experience": "Experiència",
         "contact": "Contacte"
+    },
+    "contact_form": {
+        "sending": "Enviant...",
+        "sent": "Missatge enviat!",
+        "error": "Error enviant",
+        "successMessage": "Gràcies pel teu missatge! Et respondré aviat.",
+        "errorMessage": "Hi ha hagut un error enviant el missatge. Si us plau, torna-ho a provar."
     }
 }

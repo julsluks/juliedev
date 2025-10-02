@@ -17,7 +17,7 @@
     "location": "Location",
     "locationValue": "Barcelona, Spain",
     "available": "Available for new projects",
-    "availableDesc": "I currently accept freelance projects and job opportunities in remote or hybrid mode.",
+    "availableDesc": "I currently accept freelance projects and job opportunities in-person, remote or hybrid mode.",
     "workTogether": "💼 Let's work together",
     "projectIdea": "Have a project in mind? Let's work together to make it happen!",
     "sendMessage": "Send me a message",
@@ -99,5 +99,12 @@
         "skills": "Skills",
         "experience": "Experience",
         "contact": "Contact"
+    },
+    "contact_form": {
+        "sending": "Sending...",
+        "sent": "Message sent!",
+        "error": "Send error",
+        "successMessage": "Thank you for your message! I'll reply soon.",
+        "errorMessage": "There was an error sending the message. Please try again."
     }
 }

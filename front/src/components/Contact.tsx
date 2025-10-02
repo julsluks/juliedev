@@ -16,6 +16,8 @@ export default function Contact() {
         message: ''
     })
     const [emailCopied, setEmailCopied] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({
@@ -24,10 +26,34 @@ export default function Contact() {
         })
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        const emailBody = `Nombre: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0A%0D%0AMensaje:%0D%0A${formData.message}`
-        window.open(`mailto:${t('email')}?subject=${formData.subject}&body=${emailBody}`)
+        setIsSubmitting(true)
+        setSubmitStatus(null)
+
+        try {
+            const response = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+
+            if (response.ok) {
+                setSubmitStatus('success')
+                setFormData({ name: '', email: '', subject: '', message: '' })
+            } else {
+                setSubmitStatus('error')
+            }
+        } catch (error) {
+            console.error('Error sending email:', error)
+            setSubmitStatus('error')
+        } finally {
+            setIsSubmitting(false)
+            // Limpiar el status después de 5 segundos
+            setTimeout(() => setSubmitStatus(null), 5000)
+        }
     }
 
     const copyEmail = async () => {
@@ -38,6 +64,42 @@ export default function Contact() {
         } catch (err) {
             console.error('Error al copiar email:', err)
         }
+    }
+
+    // Funciones auxiliares para el botón
+    const getButtonClassName = () => {
+        if (isSubmitting) return 'bg-gray-400 cursor-not-allowed'
+        if (submitStatus === 'success') return 'bg-green-500 hover:bg-green-600'
+        if (submitStatus === 'error') return 'bg-red-500 hover:bg-red-600'
+        return 'bg-light-primary dark:bg-dark-primary hover:bg-light-secondary dark:hover:bg-dark-secondary'
+    }
+
+    const getButtonContent = () => {
+        if (isSubmitting) {
+            return (
+                <div className="flex items-center justify-center gap-2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    {t('contact_form.sending')}
+                </div>
+            )
+        }
+        if (submitStatus === 'success') {
+            return (
+                <div className="flex items-center justify-center gap-2">
+                    <FaCheck />
+                    {t('contact_form.sent')}
+                </div>
+            )
+        }
+        if (submitStatus === 'error') {
+            return (
+                <div className="flex items-center justify-center gap-2">
+                    <FaEnvelope />
+                    {t('contact_form.error')}
+                </div>
+            )
+        }
+        return t('sendButton')
     }
 
     return (
@@ -92,15 +154,6 @@ export default function Contact() {
                                 )}
                             </motion.button>
                         </div>
-                        
-                        <motion.button
-                            onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
-                            className="px-8 py-3 bg-light-secondary dark:bg-dark-secondary text-white text-lg font-semibold rounded-lg hover:bg-light-primary dark:hover:bg-dark-primary transition-colors duration-300"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            {t('workTogether')}
-                        </motion.button>
                     </motion.div>
                 </div>
 
@@ -277,12 +330,33 @@ export default function Contact() {
                             
                             <motion.button
                                 type="submit"
-                                className="w-full px-6 py-4 bg-light-primary dark:bg-dark-primary text-white font-semibold rounded-lg hover:bg-light-secondary dark:hover:bg-dark-secondary transition-colors duration-300 shadow-lg hover:shadow-xl"
-                                whileHover={{ scale: 1.02, y: -2 }}
-                                whileTap={{ scale: 0.98 }}
+                                disabled={isSubmitting}
+                                className={`w-full px-6 py-4 text-white font-semibold rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl ${getButtonClassName()}`}
+                                whileHover={!isSubmitting ? { scale: 1.02, y: -2 } : {}}
+                                whileTap={!isSubmitting ? { scale: 0.98 } : {}}
                             >
-                                {t('sendButton')}
+                                {getButtonContent()}
                             </motion.button>
+                            
+                            {/* Mensaje de feedback */}
+                            {submitStatus === 'success' && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="text-green-600 dark:text-green-400 text-center mt-2"
+                                >
+                                    {t('contact_form.successMessage')}
+                                </motion.div>
+                            )}
+                            {submitStatus === 'error' && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="text-red-600 dark:text-red-400 text-center mt-2"
+                                >
+                                    {t('contact_form.errorMessage')}
+                                </motion.div>
+                            )}
                         </form>
                     </motion.div>
                 </div>
