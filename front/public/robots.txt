@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://julievillegas.dev/sitemap.xml
+
+# Evitar crawling de archivos innecesarios
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /.env*
+
+# Permitir crawling de imágenes
+Allow: /images/
+Allow: /icons/
+Allow: /favicon.ico
+
+# Archivos de configuración
+Disallow: /vercel.json
+Disallow: /package.json
+Disallow: /next.config.ts
