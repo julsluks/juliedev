@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://julievillegas.dev/sitemap.xml
+Sitemap: https://julievill.dev/sitemap.xml
 
 # Evitar crawling de archivos innecesarios
 Disallow: /api/

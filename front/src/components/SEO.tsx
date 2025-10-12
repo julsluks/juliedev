@@ -21,7 +21,7 @@ export default function SEO({
   
   // URLs para diferentes idiomas
   const baseUrl = process.env.NODE_ENV === 'production' 
-    ? 'https://julievillegas.dev' // Cambia por tu dominio real
+    ? 'https://julievill.dev' // Tu dominio real
     : 'http://localhost:3000'
   
   const currentUrl = `${baseUrl}${router.asPath}`

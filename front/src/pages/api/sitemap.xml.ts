@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 const generateSitemap = () => {
   const baseUrl = process.env.NODE_ENV === 'production' 
-    ? 'https://julievillegas.dev' 
+    ? 'https://julievill.dev' 
     : 'http://localhost:3000'
 
   const staticPages = [

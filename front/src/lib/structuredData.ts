@@ -6,7 +6,7 @@ const getLocalizedValue = (locale: string, es: string, ca: string, en: string) =
 
 export const getPersonStructuredData = (locale: string = 'en') => {
   const baseUrl = process.env.NODE_ENV === 'production' 
-    ? 'https://julievillegas.dev' 
+    ? 'https://julievill.dev' 
     : 'http://localhost:3000'
 
   const jobTitle = getLocalizedValue(
@@ -76,7 +76,7 @@ export const getPersonStructuredData = (locale: string = 'en') => {
 
 export const getWebsiteStructuredData = (locale: string = 'en') => {
   const baseUrl = process.env.NODE_ENV === 'production' 
-    ? 'https://julievillegas.dev' 
+    ? 'https://julievill.dev' 
     : 'http://localhost:3000'
 
   const localizedData = {
@@ -121,7 +121,7 @@ export const getWebsiteStructuredData = (locale: string = 'en') => {
 
 export const getPortfolioStructuredData = (locale: string = 'en') => {
   const baseUrl = process.env.NODE_ENV === 'production' 
-    ? 'https://julievillegas.dev' 
+    ? 'https://julievill.dev' 
     : 'http://localhost:3000'
 
   const portfolioName = getLocalizedValue(

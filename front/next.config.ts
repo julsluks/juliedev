@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   
   // Optimizaciones de imagen
   images: {
-    domains: ['julievillegas.dev', 'localhost'],
+    domains: ['julievill.dev', 'localhost'],
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
@@ -94,7 +94,7 @@ const nextConfig: NextConfig = {
   // Variables de entorno públicas
   env: {
     SITE_URL: process.env.NODE_ENV === 'production' 
-      ? 'https://julievillegas.dev' 
+      ? 'https://julievill.dev' 
       : 'http://localhost:3000',
   },
 };
