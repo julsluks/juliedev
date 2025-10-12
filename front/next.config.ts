@@ -67,29 +67,11 @@ const nextConfig: NextConfig = {
     ]
   },
 
-  // Configuración de webpack para optimización
-  webpack: (config, { dev, isServer }) => {
-    // Optimizaciones de producción
-    if (!dev && !isServer) {
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        'react/jsx-runtime.js': 'preact/compat/jsx-runtime',
-        'react': 'preact/compat',
-        'react-dom/test-utils': 'preact/test-utils',
-        'react-dom': 'preact/compat',
-      }
-    }
-    return config
-  },
-
   // Configuración experimental para mejorar rendimiento
   experimental: {
     optimizeCss: true,
     scrollRestoration: true,
   },
-
-  // Configuración para PWA (opcional)
-  swcMinify: true,
   
   // Variables de entorno públicas
   env: {
