@@ -77,21 +77,7 @@ const DraggablePill = ({
         }
     }
 
-    // Calcular límites dinámicos basados en el tamaño de la ventana
-    const getConstraints = () => {
-        if (typeof window !== 'undefined') {
-            const screenWidth = window.innerWidth
-            const screenHeight = window.innerHeight
-            
-            return {
-                left: -(screenWidth * 0.4), // 40% de la pantalla hacia la izquierda
-                right: screenWidth * 0.4,   // 40% de la pantalla hacia la derecha
-                top: -(screenHeight * 0.3), // 30% de la pantalla hacia arriba
-                bottom: screenHeight * 0.3  // 30% de la pantalla hacia abajo
-            }
-        }
-        return { left: -300, right: 300, top: -200, bottom: 200 } // fallback
-    }
+
 
     return (
         <motion.div
@@ -117,9 +103,9 @@ const DraggablePill = ({
                 transition: { duration: 0.1 }
             }}
             drag
-            dragConstraints={getConstraints()}
-            dragElastic={0.2}
-            dragTransition={{ bounceStiffness: 600, bounceDamping: 30 }}
+            dragConstraints={{ left: -200, right: 200, top: -150, bottom: 150 }}
+            dragElastic={0.1}
+            dragTransition={{ bounceStiffness: 300, bounceDamping: 40 }}
             onDragStart={() => {
                 document.body.style.cursor = 'grabbing'
             }}
@@ -136,10 +122,10 @@ const DraggablePill = ({
                     boxShadow: "0 12px 50px rgba(59, 130, 246, 0.5)",
                 }}
                 animate={{
-                    y: [0, -4, 0],
+                    y: [0, -2, 0],
                 }}
                 transition={{
-                    duration: 3 + index * 0.3,
+                    duration: 4 + index * 0.2,
                     repeat: Infinity,
                     ease: "easeInOut"
                 }}
@@ -163,29 +149,28 @@ const DraggablePill = ({
                     {skill.name}
                 </span>
 
-                {/* Efectos de partículas solo en hover */}
+                {/* Efectos de partículas reducidos solo en hover */}
                 <motion.div
                     className="absolute inset-0 rounded-full pointer-events-none"
                     initial={{ opacity: 0 }}
                     whileHover={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
                 >
-                    {[...Array(8)].map((_, i) => (
+                    {[...Array(4)].map((_, i) => (
                         <motion.div
                             key={`particle-${skill.name}-${i}`}
-                            className="absolute w-1.5 h-1.5 bg-blue-400 rounded-full"
+                            className="absolute w-1 h-1 bg-blue-400 rounded-full"
                             style={{
-                                left: `${15 + i * 10}%`,
-                                top: `${25 + (i % 3) * 25}%`,
+                                left: `${20 + i * 20}%`,
+                                top: `${30 + (i % 2) * 40}%`,
                             }}
                             animate={{
-                                scale: [0, 1.2, 0],
-                                opacity: [0, 1, 0],
-                                rotate: [0, 180, 360],
+                                scale: [0, 1, 0],
+                                opacity: [0, 0.8, 0],
                             }}
                             transition={{
-                                duration: 1.8,
-                                delay: i * 0.1,
+                                duration: 1,
+                                delay: i * 0.15,
                                 repeat: Infinity,
                             }}
                         />

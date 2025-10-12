@@ -430,25 +430,12 @@ const Hero = () => {
                             </div>
                         </motion.div>
 
-                        {/* Nombre principal con efectos interactivos */}
+                        {/* Nombre principal con efectos sutiles */}
                         <motion.h1
-                            className="text-5xl lg:text-7xl font-bold tracking-tight mb-8 cursor-pointer leading-snug"
+                            className="text-5xl lg:text-7xl font-bold tracking-tight mb-8 leading-snug"
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.4 }}
-                            whileHover={{
-                                scale: 1.02,
-                                rotateY: 5,
-                                rotateX: 2
-                            }}
-                            whileTap={{
-                                scale: 0.98,
-                                rotateY: -5
-                            }}
-                            onClick={() => {
-                                // Efecto de explosión de partículas al hacer click
-                                console.log('Click effect triggered!');
-                            }}
                         >
                             <div className="overflow-hidden pb-2">
                                 <motion.div

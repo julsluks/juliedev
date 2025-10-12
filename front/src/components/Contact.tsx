@@ -103,10 +103,73 @@ export default function Contact() {
     }
 
     return (
-        <section id="contact" className={`min-h-screen py-20 px-4 transition-all duration-500 scroll-mt-20 flex items-center ${
+        <section id="contact" className={`min-h-screen py-20 px-4 transition-all duration-500 scroll-mt-20 flex items-center relative overflow-hidden ${
             theme === 'dark' ? 'bg-dark-background' : 'bg-light-background'
         }`}>
-            <div className="max-w-6xl mx-auto">
+            {/* Fondo decorativo mejorado */}
+            <div className="absolute inset-0 pointer-events-none">
+                {/* Gradiente principal */}
+                <div className={`absolute inset-0 ${
+                    theme === 'dark' 
+                        ? 'bg-gradient-to-br from-dark-primary/5 via-transparent to-dark-secondary/5' 
+                        : 'bg-gradient-to-br from-light-primary/5 via-transparent to-light-secondary/5'
+                }`} />
+                
+                {/* Patrón de puntos */}
+                <div className={`absolute inset-0 opacity-20 ${
+                    theme === 'dark' ? 'bg-dark-surface' : 'bg-light-surface'
+                }`} 
+                style={{
+                    backgroundImage: `radial-gradient(circle, ${theme === 'dark' ? '#ffffff10' : '#00000010'} 1px, transparent 1px)`,
+                    backgroundSize: '30px 30px'
+                }} />
+                
+                {/* Formas geométricas flotantes */}
+                <motion.div 
+                    className={`absolute top-1/4 left-10 w-20 h-20 rounded-full ${
+                        theme === 'dark' ? 'bg-dark-primary/10' : 'bg-light-primary/10'
+                    } blur-xl`}
+                    animate={{
+                        y: [0, -20, 0],
+                        scale: [1, 1.1, 1],
+                    }}
+                    transition={{
+                        duration: 8,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                />
+                <motion.div 
+                    className={`absolute bottom-1/4 right-16 w-32 h-32 rounded-full ${
+                        theme === 'dark' ? 'bg-dark-secondary/10' : 'bg-light-secondary/10'
+                    } blur-2xl`}
+                    animate={{
+                        y: [0, 15, 0],
+                        scale: [1, 0.9, 1],
+                    }}
+                    transition={{
+                        duration: 12,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                />
+                <motion.div 
+                    className={`absolute top-1/2 right-1/4 w-16 h-16 ${
+                        theme === 'dark' ? 'bg-dark-primary/15' : 'bg-light-primary/15'
+                    } rotate-45 blur-lg`}
+                    animate={{
+                        rotate: [45, 90, 45],
+                        y: [0, -10, 0],
+                    }}
+                    transition={{
+                        duration: 10,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                />
+            </div>
+
+            <div className="max-w-6xl mx-auto relative z-10">
                 <div className="text-center mb-16">
                     <motion.h2 
                         className="text-4xl font-bold text-light-text-primary dark:text-dark-text-primary mb-4"
