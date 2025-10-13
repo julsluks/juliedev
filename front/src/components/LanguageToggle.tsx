@@ -11,7 +11,7 @@ const LanguageToggle = () => {
     const languages = [
         { code: 'en', name: 'English', flag: '🇺🇸' },
         { code: 'es', name: 'Español', flag: '🇪🇸' },
-        { code: 'ca', name: 'Català', flag: 'CAT' }
+        { code: 'ca', name: 'Català', flag: '🟨🟥' }
     ]
 
     const currentLanguage = languages.find(lang => lang.code === router.locale) || languages[0]
@@ -29,9 +29,11 @@ const LanguageToggle = () => {
             >
                 <span className="text-sm text-light-text-tertiary dark:text-dark-text-tertiary">
                     {currentLanguage.code === 'ca' ? (
-                        <span className="inline-block px-1 py-0.5 text-xs font-bold bg-red-500 text-white rounded" style={{background: 'linear-gradient(45deg, #fcdd09 50%, #da020e 50%)'}}>
-                            CA
-                        </span>
+                        <div className="inline-block w-5 h-3 border border-gray-300 rounded-sm overflow-hidden">
+                            <div className="h-full bg-gradient-to-r from-yellow-400 via-yellow-400 to-red-600" 
+                                 style={{background: 'repeating-linear-gradient(0deg, #fcdd09 0px, #fcdd09 3px, #da020e 3px, #da020e 6px)'}}>
+                            </div>
+                        </div>
                     ) : (
                         currentLanguage.flag
                     )}
@@ -63,9 +65,11 @@ const LanguageToggle = () => {
                             >
                                 <span>
                                     {language.code === 'ca' ? (
-                                        <span className="inline-block px-1 py-0.5 text-xs font-bold text-white rounded" style={{background: 'linear-gradient(45deg, #fcdd09 50%, #da020e 50%)'}}>
-                                            CA
-                                        </span>
+                                        <div className="inline-block w-5 h-3 border border-gray-300 rounded-sm overflow-hidden">
+                                            <div className="h-full bg-gradient-to-r from-yellow-400 via-yellow-400 to-red-600" 
+                                                 style={{background: 'repeating-linear-gradient(0deg, #fcdd09 0px, #fcdd09 3px, #da020e 3px, #da020e 6px)'}}>
+                                            </div>
+                                        </div>
                                     ) : (
                                         language.flag
                                     )}

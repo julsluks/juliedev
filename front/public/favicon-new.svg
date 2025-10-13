@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <!-- Fondo redondeado oscuro -->
+  <rect width="48" height="48" rx="8" fill="#1e293b"/>
+  
+  <!-- Círculo turquesa -->
+  <circle cx="24" cy="24" r="16" stroke="#22d3ee" stroke-width="2" fill="none"/>
+  
+  <!-- Letras JV optimizadas -->
+  <text x="24" y="30" font-family="Arial Black, sans-serif" font-size="16" font-weight="900" text-anchor="middle" fill="#22d3ee">JV</text>
+</svg>

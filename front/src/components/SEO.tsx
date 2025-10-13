@@ -95,14 +95,18 @@ export default function SEO({
       <link rel="alternate" hrefLang="x-default" href={`${baseUrl}${router.asPath}`} />
 
       {/* Favicons y iconos - orden de prioridad */}
-      <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-      <link rel="icon" type="image/svg+xml" sizes="32x32" href="/favicon-32x32.svg" />
-      <link rel="icon" type="image/svg+xml" sizes="16x16" href="/favicon-16x16.svg" />
-      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg" />
+      <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+      <link rel="icon" type="image/svg+xml" sizes="32x32" href="/favicon-32x32.svg?v=2" />
+      <link rel="icon" type="image/svg+xml" sizes="16x16" href="/favicon-16x16.svg?v=2" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg?v=2" />
       <link rel="shortcut icon" href="/favicon.ico" />
       
       {/* PWA manifest */}
       <link rel="manifest" href="/manifest.json" />
+      
+      {/* Meta para forzar actualización de favicon */}
+      <meta name="msapplication-TileImage" content="/favicon.svg" />
+      <meta name="theme-color" content="#22d3ee" />
 
       {/* Datos estructurados JSON-LD */}
       {structuredData && (
