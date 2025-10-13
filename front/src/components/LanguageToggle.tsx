@@ -27,7 +27,7 @@ const LanguageToggle = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center space-x-2 p-2 rounded-md bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border hover:bg-light-muted dark:hover:bg-dark-muted transition-colors"
             >
-                <span className="text-sm font-medium text-light-text-tertiary dark:text-dark-text-tertiary">
+                <span className="text-xs font-medium text-light-text-tertiary dark:text-dark-text-tertiary">
                     {currentLanguage.flag}
                 </span>
                 <span className="text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary">
