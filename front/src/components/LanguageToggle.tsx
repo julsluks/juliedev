@@ -27,7 +27,7 @@ const LanguageToggle = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center space-x-2 p-2 rounded-md bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border hover:bg-light-muted dark:hover:bg-dark-muted transition-colors"
             >
-                <span className="text-xs font-medium text-light-text-tertiary dark:text-dark-text-tertiary">
+                <span className="font-medium text-light-text-tertiary dark:text-dark-text-tertiary" style={{fontSize: '10px'}}>
                     {currentLanguage.flag}
                 </span>
                 <span className="text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary">
@@ -55,7 +55,7 @@ const LanguageToggle = () => {
                                         : 'text-light-text-secondary dark:text-dark-text-secondary'
                                 }`}
                             >
-                                <span className="font-medium text-xs">
+                                <span className="font-medium" style={{fontSize: '10px'}}>
                                     {language.flag}
                                 </span>
                                 <span>{language.name}</span>
