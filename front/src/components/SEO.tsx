@@ -94,12 +94,12 @@ export default function SEO({
       <link rel="alternate" hrefLang="ca" href={`${baseUrl}/ca${router.asPath}`} />
       <link rel="alternate" hrefLang="x-default" href={`${baseUrl}${router.asPath}`} />
 
-      {/* Favicons y iconos */}
+      {/* Favicons y iconos - orden de prioridad */}
       <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-      <link rel="icon" href="/favicon.ico" />
-      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg" />
       <link rel="icon" type="image/svg+xml" sizes="32x32" href="/favicon-32x32.svg" />
       <link rel="icon" type="image/svg+xml" sizes="16x16" href="/favicon-16x16.svg" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg" />
+      <link rel="shortcut icon" href="/favicon.ico" />
       
       {/* PWA manifest */}
       <link rel="manifest" href="/manifest.json" />

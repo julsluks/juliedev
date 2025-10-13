@@ -11,7 +11,7 @@ const LanguageToggle = () => {
     const languages = [
         { code: 'en', name: 'English', flag: '🇺🇸' },
         { code: 'es', name: 'Español', flag: '🇪🇸' },
-        { code: 'ca', name: 'Català', flag: '🇨🇦' }
+        { code: 'ca', name: 'Català', flag: 'CAT' }
     ]
 
     const currentLanguage = languages.find(lang => lang.code === router.locale) || languages[0]
@@ -27,7 +27,15 @@ const LanguageToggle = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center space-x-2 p-2 rounded-md bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border hover:bg-light-muted dark:hover:bg-dark-muted transition-colors"
             >
-                <span className="text-sm text-light-text-tertiary dark:text-dark-text-tertiary">{currentLanguage.flag}</span>
+                <span className="text-sm text-light-text-tertiary dark:text-dark-text-tertiary">
+                    {currentLanguage.code === 'ca' ? (
+                        <span className="inline-block px-1 py-0.5 text-xs font-bold bg-red-500 text-white rounded" style={{background: 'linear-gradient(45deg, #fcdd09 50%, #da020e 50%)'}}>
+                            CA
+                        </span>
+                    ) : (
+                        currentLanguage.flag
+                    )}
+                </span>
                 <span className="text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary">
                     {currentLanguage.code.toUpperCase()}
                 </span>
@@ -53,7 +61,15 @@ const LanguageToggle = () => {
                                         : 'text-light-text-secondary dark:text-dark-text-secondary'
                                 }`}
                             >
-                                <span>{language.flag}</span>
+                                <span>
+                                    {language.code === 'ca' ? (
+                                        <span className="inline-block px-1 py-0.5 text-xs font-bold text-white rounded" style={{background: 'linear-gradient(45deg, #fcdd09 50%, #da020e 50%)'}}>
+                                            CA
+                                        </span>
+                                    ) : (
+                                        language.flag
+                                    )}
+                                </span>
                                 <span>{language.name}</span>
                             </button>
                         ))}
