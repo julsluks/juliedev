@@ -425,7 +425,7 @@ const Hero = () => {
                         >
                             <div className="inline-flex items-center px-6 py-3 rounded-full border border-light-border/50 dark:border-dark-border/50 bg-light-surface/90 dark:bg-dark-surface/90 backdrop-blur-md shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group">
                                 <span className="text-light-text-secondary dark:text-dark-text-secondary text-sm font-medium tracking-wider group-hover:text-light-primary dark:group-hover:text-dark-primary transition-colors">
-                                    FULL STACK • FRONTEND • {currentYear}
+                                    FULL STACK • DEVELOPER • {currentYear}
                                 </span>
                             </div>
                         </motion.div>
