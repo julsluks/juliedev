@@ -156,7 +156,7 @@ const DraggablePill = ({
                     whileHover={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
                 >
-                    {[...Array(4)].map((_, i) => (
+                    {[... new Array(4)].map((_, i) => (
                         <motion.div
                             key={`particle-${skill.name}-${i}`}
                             className="absolute w-1 h-1 bg-blue-400 rounded-full"
@@ -470,7 +470,7 @@ export default function Skills() {
                                             whileHover={{ opacity: 1 }}
                                             transition={{ duration: 0.3 }}
                                         >
-                                            {[...Array(4)].map((_, i) => (
+                                            {[...new Array(4)].map((_, i) => (
                                                 <motion.div
                                                     key={`soft-particle-${skill.key}-${i}`}
                                                     className="absolute w-1 h-1 bg-pink-400 rounded-full"

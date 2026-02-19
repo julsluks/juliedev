@@ -64,3 +64,60 @@ section {
 .grid-cols-15 {
   grid-template-columns: repeat(15, minmax(0, 1fr));
 }
+
+/* Updated color palette */
+:root {
+  --color-primary: #4A90E2;
+  --color-secondary: #50E3C2;
+  --color-background-light: #F5F7FA;
+  --color-background-dark: #1C1E26;
+  --color-text-light: #333333;
+  --color-text-dark: #FFFFFF;
+  --color-muted-light: #E4E7EB;
+  --color-muted-dark: #2E3138;
+}
+
+/* Updated body styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--color-background-light);
+  color: var(--color-text-light);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Updated link styles */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--color-secondary);
+}
+
+/* Button styles */
+button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar styles */
+nav {
+  background: var(--color-background-light);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+nav.scrolled {
+  background: var(--color-background-dark);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

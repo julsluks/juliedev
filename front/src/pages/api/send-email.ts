@@ -88,7 +88,7 @@ export default async function handler(
                         <div style="margin-top: 20px;">
                             <h4 style="color: #495057; margin-bottom: 10px;">Mensaje:</h4>
                             <div style="background: white; padding: 15px; border-radius: 5px; border-left: 4px solid #667eea;">
-                                ${message.replace(/\n/g, '<br>')}
+                                ${message.replaceAll('\n', '<br>')}
                             </div>
                         </div>
                         <hr style="margin: 20px 0; border: none; border-top: 1px solid #e9ecef;">

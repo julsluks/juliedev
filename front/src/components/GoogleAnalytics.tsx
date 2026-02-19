@@ -37,8 +37,8 @@ export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps)
 
 // Función para trackear eventos personalizados
 export const trackEvent = (eventName: string, parameters?: Record<string, any>) => {
-  if (typeof window !== 'undefined' && (window as any).gtag) {
-    (window as any).gtag('event', eventName, parameters)
+  if (typeof globalThis !== 'undefined' && (globalThis as any).gtag) {
+    (globalThis as any).gtag('event', eventName, parameters)
   }
 }
 

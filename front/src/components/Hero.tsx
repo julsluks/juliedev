@@ -293,15 +293,15 @@ const Hero = () => {
     // Handle mouse movement
     const handleMouseMove = (event: MouseEvent) => {
         const { clientX, clientY } = event
-        const { innerWidth, innerHeight } = window
+        const { innerWidth, innerHeight } = globalThis
 
         mouseX.set((clientX - innerWidth / 2) / (innerWidth / 2))
         mouseY.set((clientY - innerHeight / 2) / (innerHeight / 2))
     }
 
     useEffect(() => {
-        window.addEventListener('mousemove', handleMouseMove)
-        return () => window.removeEventListener('mousemove', handleMouseMove)
+        globalThis.addEventListener('mousemove', handleMouseMove)
+        return () => globalThis.removeEventListener('mousemove', handleMouseMove)
     }, [mouseX, mouseY])
 
     const scrollToContact = () => {

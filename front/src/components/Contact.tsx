@@ -395,8 +395,8 @@ export default function Contact() {
                                 type="submit"
                                 disabled={isSubmitting}
                                 className={`w-full px-6 py-4 text-white font-semibold rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl ${getButtonClassName()}`}
-                                whileHover={!isSubmitting ? { scale: 1.02, y: -2 } : {}}
-                                whileTap={!isSubmitting ? { scale: 0.98 } : {}}
+                                whileHover={isSubmitting ? {} : { scale: 1.02, y: -2 }}
+                                whileTap={isSubmitting ? {} : { scale: 0.98 }}
                             >
                                 {getButtonContent()}
                             </motion.button>

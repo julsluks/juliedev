@@ -2,11 +2,11 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 interface SEOProps {
-  title?: string
-  description?: string
-  keywords?: string
-  ogImage?: string
-  structuredData?: object
+  readonly title?: string
+  readonly description?: string
+  readonly keywords?: string
+  readonly ogImage?: string
+  readonly structuredData?: object
 }
 
 export default function SEO({ 
@@ -35,21 +35,21 @@ export default function SEO({
   
   // Títulos y descripciones por defecto según idioma
   const defaultTitle = getLocalizedContent(
-    'Julie Villegas - Desarrolladora Frontend | React, Vue.js, Next.js',
-    'Julie Villegas - Desenvolupadora Frontend | React, Vue.js, Next.js',
-    'Julie Villegas - Frontend Developer | React, Vue.js, Next.js'
+    'Julie Villegas - Desarrolladora Full-Stack | React, Vue.js, Next.js',
+    'Julie Villegas - Desenvolupadora Full-Stack | React, Vue.js, Next.js',
+    'Julie Villegas - Full-Stack Developer | React, Vue.js, Next.js'
   )
   
   const defaultDescription = getLocalizedContent(
-    'Julie Villegas - Desarrolladora Frontend especializada en React, Vue.js, Next.js y Laravel. Portfolio con proyectos reales y experiencia en Barcelona, España.',
-    'Julie Villegas - Desenvolupadora Frontend especialitzada en React, Vue.js, Next.js i Laravel. Portfolio amb projectes reals i experiència a Barcelona, Catalunya.',
-    'Julie Villegas - Frontend Developer specialized in React, Vue.js, Next.js and Laravel. Portfolio with real projects and experience in Barcelona, Spain.'
+    'Julie Villegas - Desarrolladora Full-Stack especializada en React, Vue.js, Next.js y Laravel. Portfolio con proyectos reales y experiencia en Barcelona, España.',
+    'Julie Villegas - Desenvolupadora Full-Stack especialitzada en React, Vue.js, Next.js i Laravel. Portfolio amb projectes reals i experiència a Barcelona, Catalunya.',
+    'Julie Villegas - Full-Stack Developer specialized in React, Vue.js, Next.js and Laravel. Portfolio with real projects and experience in Barcelona, Spain.'
   )
   
   const defaultKeywords = getLocalizedContent(
-    'Julie Villegas, Julie Dev, desarrolladora frontend, React, Vue.js, Next.js, Laravel, Barcelona, España, portfolio, desarrolladora web, frontend developer, JavaScript, TypeScript',
-    'Julie Villegas, Julie Dev, desenvolupadora frontend, React, Vue.js, Next.js, Laravel, Barcelona, Catalunya, portfolio, desenvolupadora web, frontend developer, JavaScript, TypeScript',
-    'Julie Villegas, Julie Dev, frontend developer, React, Vue.js, Next.js, Laravel, Barcelona, Spain, portfolio, web developer, JavaScript, TypeScript'
+    'Julie Villegas, Julie Dev, desarrolladora Full-Stack, React, Vue.js, Next.js, Laravel, Barcelona, España, portfolio, desarrolladora web, Full-Stack developer, JavaScript, TypeScript',
+    'Julie Villegas, Julie Dev, desenvolupadora Full-Stack, React, Vue.js, Next.js, Laravel, Barcelona, Catalunya, portfolio, desenvolupadora web, Full-Stack developer, JavaScript, TypeScript',
+    'Julie Villegas, Julie Dev, Full-Stack developer, React, Vue.js, Next.js, Laravel, Barcelona, Spain, portfolio, web developer, JavaScript, TypeScript'
   )
 
   const seoTitle = title || defaultTitle
