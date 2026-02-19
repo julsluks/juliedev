@@ -69,11 +69,11 @@ const Navbar = () => {
                     </Link>
                     <div className="hidden md:flex space-x-8">
                         {navLinks.map((link) => (
-                            <Link key={link.href} href={`#${link.href}`}>
-                                className={`text-lg font-medium transition-colors ${activeSection === link.href
-                                    ? 'text-blue-500 underline'
-                                    : 'text-gray-600 hover:text-blue-400'
-                                    }`}
+                            <Link key={link.href} href={`#${link.href}`} className={`text-lg font-medium transition-colors ${activeSection === link.href
+                                ? 'text-blue-500 underline'
+                                : 'text-gray-600 hover:text-blue-400'
+                                }`}>
+
                                 {link.label}
                             </Link>
                         ))}
