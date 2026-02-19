@@ -11,16 +11,16 @@ export const getPersonStructuredData = (locale: string = 'en') => {
 
   const jobTitle = getLocalizedValue(
     locale,
-    'Desarrolladora Frontend',
-    'Desenvolupadora Frontend', 
-    'Frontend Developer'
+    'Desarrolladora Full Stack',
+    'Desenvolupadora Full Stack', 
+    'Full Stack Developer'
   )
 
   const description = getLocalizedValue(
     locale,
-    'Desarrolladora Frontend especializada en React, Vue.js, Next.js y Laravel con experiencia en Barcelona, España.',
-    'Desenvolupadora Frontend especialitzada en React, Vue.js, Next.js i Laravel amb experiència a Barcelona, Catalunya.',
-    'Frontend Developer specialized in React, Vue.js, Next.js and Laravel with experience in Barcelona, Spain.'
+    'Desarrolladora Full Stack especializada en React, Vue.js, Next.js y Laravel con experiencia en Barcelona, España.',
+    'Desenvolupadora Full Stack especialitzada en React, Vue.js, Next.js i Laravel amb experiència a Barcelona, Catalunya.',
+    'Full Stack Developer specialized in React, Vue.js, Next.js and Laravel with experience in Barcelona, Spain.'
   )
 
   const location = getLocalizedValue(
@@ -82,18 +82,18 @@ export const getWebsiteStructuredData = (locale: string = 'en') => {
   const localizedData = {
     es: {
       name: 'Julie Villegas Portfolio',
-      description: 'Portfolio profesional de Julie Villegas, desarrolladora frontend especializada en React, Vue.js y Next.js',
-      author: 'Julie Villegas - Desarrolladora Frontend'
+      description: 'Portfolio profesional de Julie Villegas, desarrolladora Full Stack especializada en React, Vue.js y Next.js',
+      author: 'Julie Villegas - Desarrolladora Full Stack'
     },
     ca: {
       name: 'Julie Villegas Portfolio',
-      description: 'Portfolio professional de Julie Villegas, desenvolupadora frontend especialitzada en React, Vue.js i Next.js',
-      author: 'Julie Villegas - Desenvolupadora Frontend'
+      description: 'Portfolio professional de Julie Villegas, desenvolupadora Full Stack especialitzada en React, Vue.js i Next.js',
+      author: 'Julie Villegas - Desenvolupadora Full Stack'
     },
     en: {
       name: 'Julie Villegas Portfolio',
-      description: 'Professional portfolio of Julie Villegas, frontend developer specialized in React, Vue.js and Next.js',
-      author: 'Julie Villegas - Frontend Developer'
+      description: 'Professional portfolio of Julie Villegas, Full Stack developer specialized in React, Vue.js and Next.js',
+      author: 'Julie Villegas - Full Stack Developer'
     }
   }
 
@@ -133,9 +133,9 @@ export const getPortfolioStructuredData = (locale: string = 'en') => {
 
   const jobTitle = getLocalizedValue(
     locale,
-    'Desarrolladora Frontend',
-    'Desenvolupadora Frontend',
-    'Frontend Developer'
+    'Desarrolladora Full Stack',
+    'Desenvolupadora Full Stack',
+    'Full Stack Developer'
   )
 
   return {

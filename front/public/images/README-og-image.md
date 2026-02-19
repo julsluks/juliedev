@@ -4,7 +4,7 @@
 // 
 // La imagen debe incluir:
 // - Tu nombre: "Julie Villegas"
-// - Tu título: "Frontend Developer"
+// - Tu título: "Full Stack Developer"
 // - Tecnologías principales: React, Vue.js, Next.js
 // - Tu ubicación: Barcelona
 // 
