@@ -18,9 +18,9 @@ export const getPersonStructuredData = (locale: string = 'en') => {
 
   const description = getLocalizedValue(
     locale,
-    'Desarrolladora Full Stack especializada en React, Vue.js, Next.js y Laravel con experiencia en Barcelona, España.',
-    'Desenvolupadora Full Stack especialitzada en React, Vue.js, Next.js i Laravel amb experiència a Barcelona, Catalunya.',
-    'Full Stack Developer specialized in React, Vue.js, Next.js and Laravel with experience in Barcelona, Spain.'
+    'Desarrolladora full-stack con frontend fuerte. Experiencia con React, Vue.js, Next.js, Laravel y Livewire en Barcelona / Vilassar de Mar.',
+    'Desenvolupadora full-stack amb frontend fort. Experiència amb React, Vue.js, Next.js, Laravel i Livewire a Barcelona / Vilassar de Mar.',
+    'Full-stack developer with a strong frontend focus. Experience with React, Vue.js, Next.js, Laravel, and Livewire in Barcelona / Vilassar de Mar.'
   )
 
   const location = getLocalizedValue(
@@ -33,9 +33,9 @@ export const getPersonStructuredData = (locale: string = 'en') => {
   const country = getLocalizedValue(locale, 'España', 'Catalunya', 'Spain')
 
   const skills = [
-    'React', 'Vue.js', 'Next.js', 'TypeScript', 'JavaScript', 
-    'Laravel', 'Node.js', 'HTML5', 'CSS3', 'Tailwind CSS',
-    'Git', 'GitHub', 'Figma', 'MySQL'
+    'React', 'Vue.js', 'Next.js', 'TypeScript', 'JavaScript',
+    'Laravel', 'Livewire', 'Node.js', 'HTML5', 'CSS3', 'Tailwind CSS',
+    'SQL', 'MySQL', 'Docker', 'Git', 'GitHub', 'Figma'
   ]
 
   return {

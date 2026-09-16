@@ -1,6 +1,7 @@
 # Local AI hub (symlinks to ~/personal)
 AGENTS.md
 CLAUDE.md
+PRODUCT.md
 .cursor/skills/
 .cursor/rules/hallmark.mdc
 .cursor/rules/design-orchestration.mdc

@@ -95,7 +95,7 @@ export default function Experience() {
     }
 
     const experiences: ExperienceItem[] = [
-        // Experiencia laboral
+        // Experiencia laboral (más reciente primero)
         {
             id: 1,
             ...getExperienceData(1),
@@ -106,15 +106,20 @@ export default function Experience() {
             ...getExperienceData(2),
             type: "work"
         },
-        // Educación
         {
             id: 3,
             ...getExperienceData(3),
-            type: "education"
+            type: "work"
         },
+        // Educación
         {
             id: 4,
             ...getExperienceData(4),
+            type: "education"
+        },
+        {
+            id: 5,
+            ...getExperienceData(5),
             type: "education"
         }
     ]
