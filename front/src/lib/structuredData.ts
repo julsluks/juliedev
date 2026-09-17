@@ -35,7 +35,9 @@ export const getPersonStructuredData = (locale: string = 'en') => {
   const skills = [
     'React', 'Vue.js', 'Next.js', 'TypeScript', 'JavaScript',
     'Laravel', 'Livewire', 'Node.js', 'HTML5', 'CSS3', 'Tailwind CSS',
-    'SQL', 'MySQL', 'Docker', 'Git', 'GitHub', 'Figma'
+    'SQL', 'MySQL', 'Docker', 'Git', 'GitHub', 'Figma',
+    'Cloudflare', 'Herd', 'Jira',
+    'Claude', 'Cursor', 'Spec Kit', 'OpenSpec', 'n8n'
   ]
 
   return {

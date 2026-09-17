@@ -4,8 +4,10 @@ import { useState } from 'react'
 import { useTheme } from '@/contexts/ThemeContext'
 import { useTranslation } from 'next-i18next'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Mail, MapPin, Github, Linkedin, Copy, Check } from 'lucide-react'
+import { Mail, MapPin, Github, Linkedin, Copy, Check, Download } from 'lucide-react'
 import { fadeRise, motionSafe } from '@/lib/motion'
+import { CV_DOWNLOAD_NAME, CV_HREF, GITHUB_URL, LINKEDIN_URL } from '@/lib/links'
+import { trackCvDownload, trackLinkedInClick } from '@/components/GoogleAnalytics'
 
 export default function Contact() {
   const { theme } = useTheme()
@@ -115,7 +117,7 @@ export default function Contact() {
               </li>
               <li>
                 <a
-                  href="https://github.com/julsluks"
+                  href={GITHUB_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex cursor-pointer items-center gap-3 text-light-text-secondary hover:text-light-primary dark:text-dark-text-secondary dark:hover:text-dark-primary"
@@ -126,16 +128,27 @@ export default function Contact() {
               </li>
               <li>
                 <a
-                  href="https://linkedin.com/in/julie-villegas"
+                  href={LINKEDIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex cursor-pointer items-center gap-3 text-light-text-secondary hover:text-light-primary dark:text-dark-text-secondary dark:hover:text-dark-primary"
+                  className="inline-flex cursor-pointer items-center gap-3 font-medium text-light-primary hover:opacity-80 dark:text-dark-primary"
+                  onClick={() => trackLinkedInClick('contact')}
                 >
                   <Linkedin className="h-4 w-4" />
-                  LinkedIn
+                  {t('linkedin')}
                 </a>
               </li>
             </ul>
+
+            <a
+              href={CV_HREF}
+              download={CV_DOWNLOAD_NAME}
+              className="btn-ghost w-full gap-2 sm:w-auto"
+              onClick={() => trackCvDownload('contact')}
+            >
+              <Download className="h-4 w-4 shrink-0" aria-hidden />
+              {t('downloadCv')}
+            </a>
           </motion.aside>
 
           <motion.form

@@ -63,3 +63,17 @@ export const trackEmailCopy = () => {
     event_label: 'email_copy'
   })
 }
+
+export const trackCvDownload = (placement: string) => {
+  trackEvent('cv_download', {
+    event_category: 'engagement',
+    event_label: placement,
+  })
+}
+
+export const trackLinkedInClick = (placement: string) => {
+  trackEvent('linkedin_click', {
+    event_category: 'engagement',
+    event_label: placement,
+  })
+}

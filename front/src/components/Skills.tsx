@@ -16,7 +16,8 @@ const frontend = [
   'Tailwind CSS',
 ]
 const backend = ['Laravel', 'Livewire', 'Node.js', 'PHP', 'MySQL', 'SQL', 'MongoDB']
-const tools = ['Docker', 'Git', 'GitHub', 'Figma']
+const tools = ['Docker', 'Git', 'GitHub', 'Figma', 'Cloudflare', 'Herd', 'Jira']
+const ai = ['Claude', 'Cursor', 'Spec Kit', 'OpenSpec', 'n8n']
 
 export default function Skills() {
   const { t } = useTranslation('common')
@@ -27,6 +28,7 @@ export default function Skills() {
     { title: t('skillsFrontend'), items: frontend },
     { title: t('skillsBackend'), items: backend },
     { title: t('skillsTools'), items: tools },
+    { title: t('skillsAI'), items: ai },
   ]
 
   return (

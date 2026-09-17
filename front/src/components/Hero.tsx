@@ -2,9 +2,11 @@
 
 import { useTranslation } from 'next-i18next'
 import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowDown, Copy, Check } from 'lucide-react'
+import { ArrowDown, Copy, Check, Download } from 'lucide-react'
 import { useState } from 'react'
 import { craftTransition, fadeRise, staggerChildren } from '@/lib/motion'
+import { CV_DOWNLOAD_NAME, CV_HREF, LINKEDIN_URL } from '@/lib/links'
+import { trackCvDownload, trackLinkedInClick } from '@/components/GoogleAnalytics'
 
 const Hero = () => {
   const { t } = useTranslation('common')
@@ -86,18 +88,38 @@ const Hero = () => {
             {t('description')}
           </motion.p>
 
-          <motion.div variants={fadeRise} className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <button type="button" onClick={scrollToContact} className="btn-primary">
-              {t('contact')}
-            </button>
+          <motion.div variants={fadeRise} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <button type="button" onClick={scrollToContact} className="btn-primary">
+                {t('contact')}
+              </button>
+              <a
+                href={CV_HREF}
+                download={CV_DOWNLOAD_NAME}
+                className="btn-ghost gap-2"
+                onClick={() => trackCvDownload('hero')}
+              >
+                <Download className="h-4 w-4 shrink-0" aria-hidden />
+                {t('downloadCv')}
+              </a>
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-1 text-sm font-medium text-light-primary underline-offset-4 transition-opacity hover:underline hover:opacity-80 dark:text-dark-primary"
+                onClick={() => trackLinkedInClick('hero')}
+              >
+                {t('linkedin')}
+              </a>
+            </div>
             <button
               type="button"
               onClick={copyEmail}
-              className="btn-ghost gap-2"
+              className="inline-flex max-w-full cursor-pointer items-center gap-2 self-start text-sm text-light-text-secondary transition-colors hover:text-light-primary dark:text-dark-text-secondary dark:hover:text-dark-primary"
               title={t('copyEmail')}
             >
               <span className="truncate">{t('email')}</span>
-              {copied ? <Check className="h-4 w-4 shrink-0" /> : <Copy className="h-4 w-4 shrink-0" />}
+              {copied ? <Check className="h-3.5 w-3.5 shrink-0" /> : <Copy className="h-3.5 w-3.5 shrink-0" />}
             </button>
           </motion.div>
         </motion.div>
