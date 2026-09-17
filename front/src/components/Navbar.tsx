@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { useTranslation } from 'next-i18next'
 import { useTheme } from '@/contexts/ThemeContext'
 import ThemeToggle from './ThemeToggle'
@@ -9,318 +9,151 @@ import LanguageToggle from './LanguageToggle'
 import { Menu, X } from 'lucide-react'
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false)
-    const [scrolled, setScrolled] = useState(false)
-    const [activeSection, setActiveSection] = useState('')
-    const { t } = useTranslation('common')
-    const { theme } = useTheme()
+  const [isOpen, setIsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
+  const { t } = useTranslation('common')
+  const { theme } = useTheme()
+  const prefersReduced = useReducedMotion()
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const mainElement = document.querySelector('main')
-            if (!mainElement) return
+  useEffect(() => {
+    const handleScroll = () => {
+      const mainElement = document.querySelector('main')
+      if (!mainElement) return
+      setScrolled(mainElement.scrollTop > 10)
 
-            const scrollTop = mainElement.scrollTop
-            setScrolled(scrollTop > 10)
-
-            // Detectar la sección activa
-            const sections = ['home', 'projects', 'skills', 'experience', 'contact']
-            
-            for (const section of sections) {
-                const element = document.getElementById(section === 'home' ? 'hero' : section)
-                if (element) {
-                    const elementRect = element.getBoundingClientRect()
-                    const mainRect = mainElement.getBoundingClientRect()
-                    
-                    // Si el elemento está visible en el viewport del main
-                    if (elementRect.top <= mainRect.top + 100 && elementRect.bottom > mainRect.top + 100) {
-                        setActiveSection(section)
-                        break
-                    }
-                }
-            }
+      const sections = ['home', 'experience', 'projects', 'skills', 'contact']
+      for (const section of sections) {
+        const element = document.getElementById(section === 'home' ? 'hero' : section)
+        if (element) {
+          const elementRect = element.getBoundingClientRect()
+          const mainRect = mainElement.getBoundingClientRect()
+          if (elementRect.top <= mainRect.top + 100 && elementRect.bottom > mainRect.top + 100) {
+            setActiveSection(section)
+            break
+          }
         }
-
-        const mainElement = document.querySelector('main')
-        if (mainElement) {
-            mainElement.addEventListener('scroll', handleScroll)
-            return () => mainElement.removeEventListener('scroll', handleScroll)
-        }
-    }, [])
-
-    const scrollToSection = (sectionId: string) => {
-        const targetId = sectionId === 'home' ? 'hero' : sectionId
-        const element = document.getElementById(targetId)
-        const mainElement = document.querySelector('main')
-
-        if (element && mainElement) {
-            // Añadir clase de transición para efecto visual
-            mainElement.style.scrollBehavior = 'smooth'
-            
-            // Calculamos la posición relativa al contenedor main
-            const elementRect = element.getBoundingClientRect()
-            const mainRect = mainElement.getBoundingClientRect()
-            const scrollTop = mainElement.scrollTop
-            const targetPosition = elementRect.top - mainRect.top + scrollTop
-
-            // Scroll suave con animación personalizada
-            const startPosition = mainElement.scrollTop
-            const distance = targetPosition - startPosition
-            const duration = 350 // 350ms para una transición más rápida e inmediata
-            let startTime: number | null = null
-
-            const animation = (currentTime: number) => {
-                startTime ??= currentTime
-                const timeElapsed = currentTime - startTime
-                const run = easeInOutQuad(timeElapsed, startPosition, distance, duration)
-                mainElement.scrollTop = run
-                if (timeElapsed < duration) requestAnimationFrame(animation)
-            }
-
-            // Función de easing para una transición más natural
-            const easeInOutQuad = (t: number, b: number, c: number, d: number) => {
-                t /= d / 2
-                if (t < 1) return c / 2 * t * t + b
-                t--
-                return -c / 2 * (t * (t - 2) - 1) + b
-            }
-
-            requestAnimationFrame(animation)
-        }
-        setIsOpen(false)
+      }
     }
 
-    const navLinks = [
-        { href: 'home', label: t('nav.home') },
-        { href: 'projects', label: t('nav.projects') },
-        { href: 'skills', label: t('nav.skills') },
-        { href: 'experience', label: t('nav.experience') },
-        { href: 'contact', label: t('nav.contact') },
-    ]
-
-    const getThemeLabel = (currentTheme: string) => {
-        return currentTheme === 'light' ? t('lightMode') : t('darkMode')
+    const mainElement = document.querySelector('main')
+    if (mainElement) {
+      mainElement.addEventListener('scroll', handleScroll)
+      return () => mainElement.removeEventListener('scroll', handleScroll)
     }
+  }, [])
 
-    return (
-        <motion.nav
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className={`sticky top-0 w-full z-50 transition-all duration-500 ${scrolled
-                ? 'bg-light-background/95 dark:bg-dark-background/95 backdrop-blur-xl shadow-lg'
-                : 'bg-light-background/80 dark:bg-dark-background/80 backdrop-blur-md'
-                }`}
+  const scrollToSection = (sectionId: string) => {
+    const targetId = sectionId === 'home' ? 'hero' : sectionId
+    const element = document.getElementById(targetId)
+    const mainElement = document.querySelector('main')
+    if (element && mainElement) {
+      const elementRect = element.getBoundingClientRect()
+      const mainRect = mainElement.getBoundingClientRect()
+      const targetPosition = elementRect.top - mainRect.top + mainElement.scrollTop
+      mainElement.scrollTo({
+        top: targetPosition,
+        behavior: prefersReduced ? 'auto' : 'smooth',
+      })
+    }
+    setIsOpen(false)
+  }
+
+  const navLinks = [
+    { href: 'home', label: t('nav.home') },
+    { href: 'experience', label: t('nav.experience') },
+    { href: 'projects', label: t('nav.projects') },
+    { href: 'skills', label: t('nav.skills') },
+    { href: 'contact', label: t('nav.contact') },
+  ]
+
+  return (
+    <nav
+      className={`sticky top-0 z-50 w-full border-b transition-colors duration-craft ${
+        scrolled
+          ? 'border-light-border/80 bg-light-background/95 backdrop-blur-md dark:border-dark-border/80 dark:bg-dark-background/95'
+          : 'border-transparent bg-light-background/80 backdrop-blur-sm dark:bg-dark-background/80'
+      }`}
+    >
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+        <button
+          type="button"
+          onClick={() => scrollToSection('home')}
+          className="cursor-pointer font-display text-lg font-semibold tracking-tight text-light-text-primary dark:text-dark-text-primary"
         >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between py-3">
-                    {/* Logo with enhanced effects */}
-                    <motion.button
-                        onClick={() => scrollToSection('home')}
-                        className="group relative flex items-center space-x-2"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <motion.div 
-                            className="relative flex items-center justify-center w-16 h-8 rounded-lg bg-gradient-to-br from-light-primary/10 to-light-secondary/10 dark:from-dark-primary/10 dark:to-dark-secondary/10 group-hover:from-light-primary/20 group-hover:to-light-secondary/20 dark:group-hover:from-dark-primary/20 dark:group-hover:to-dark-secondary/20 transition-all duration-300 shadow-lg group-hover:shadow-xl"
-                            whileHover={{ rotate: [0, -5, 5, 0] }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <span className="text-lg font-bold bg-gradient-to-r from-light-primary via-light-secondary to-light-primary dark:from-dark-primary dark:via-dark-secondary dark:to-dark-primary bg-clip-text text-transparent animate-pulse">
-                                {"<JV/>"}
-                            </span>
-                            {/* Glow effect */}
-                            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-light-primary/5 to-light-secondary/5 dark:from-dark-primary/5 dark:to-dark-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
-                        </motion.div>
-                    </motion.button>
+          Julie Villegas
+        </button>
 
-                    {/* Desktop Navigation with enhanced effects */}
-                    <div className="hidden md:flex items-center space-x-6">
-                        {navLinks.map((link, index) => (
-                            <motion.button
-                                key={link.href}
-                                onClick={() => scrollToSection(link.href)}
-                                className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${activeSection === link.href
-                                    ? 'text-light-primary dark:text-dark-primary bg-light-primary/5 dark:bg-dark-primary/5'
-                                    : 'text-light-text-secondary dark:text-dark-text-secondary hover:text-light-primary dark:hover:text-dark-primary hover:bg-light-muted/50 dark:hover:bg-dark-muted/50'
-                                    }`}
-                                initial={{ opacity: 0, y: -20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.1 }}
-                                whileHover={{ scale: 1.05, y: -2 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                {link.label}
-                                {activeSection === link.href && (
-                                    <motion.span
-                                        layoutId="desktop-nav-underline"
-                                        className="absolute left-0 bottom-0 h-0.5 w-full bg-gradient-to-r from-light-primary to-light-secondary dark:from-dark-primary dark:to-dark-secondary rounded-full"
-                                        transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                                    />
-                                )}
-                                {/* Hover glow effect */}
-                                <motion.div
-                                    className="absolute inset-0 rounded-lg bg-gradient-to-r from-light-primary/10 to-light-secondary/10 dark:from-dark-primary/10 dark:to-dark-secondary/10 opacity-0"
-                                    whileHover={{ opacity: 1 }}
-                                    transition={{ duration: 0.2 }}
-                                />
-                            </motion.button>
-                        ))}
-                        
-                        {/* Enhanced toggle buttons */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.6 }}
-                            className="flex items-center space-x-3 ml-4 pl-4 border-l border-light-border/30 dark:border-dark-border/30"
-                        >
-                            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                                <LanguageToggle />
-                            </motion.div>
-                            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                                <ThemeToggle />
-                            </motion.div>
-                        </motion.div>
-                    </div>
+        <div className="hidden items-center gap-1 md:flex">
+          {navLinks.map((link) => (
+            <button
+              key={link.href}
+              type="button"
+              onClick={() => scrollToSection(link.href)}
+              className={`cursor-pointer rounded-md px-3 py-2 text-sm font-medium transition-colors duration-fast ${
+                activeSection === link.href
+                  ? 'text-light-primary dark:text-dark-primary'
+                  : 'text-light-text-secondary hover:text-light-text-primary dark:text-dark-text-secondary dark:hover:text-dark-text-primary'
+              }`}
+            >
+              {link.label}
+            </button>
+          ))}
+          <div className="ml-3 flex items-center gap-2 border-l border-light-border pl-4 dark:border-dark-border">
+            <LanguageToggle />
+            <ThemeToggle />
+          </div>
+        </div>
 
-                    {/* Enhanced Mobile menu button */}
-                    <motion.div 
-                        className="flex md:hidden"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.3 }}
-                    >
-                        <motion.button
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="relative inline-flex items-center justify-center p-2 rounded-xl text-light-text-secondary dark:text-dark-text-secondary hover:text-light-primary dark:hover:text-dark-primary focus:outline-none bg-light-surface/50 dark:bg-dark-surface/50 hover:bg-light-muted dark:hover:bg-dark-muted transition-all duration-300 shadow-lg"
-                            aria-label="Toggle menu"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            <motion.div
-                                animate={isOpen ? { rotate: 180 } : { rotate: 0 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                {isOpen ? (
-                                    <X className="h-6 w-6" />
-                                ) : (
-                                    <Menu className="h-6 w-6" />
-                                )}
-                            </motion.div>
-                            {/* Button glow effect */}
-                            <motion.div
-                                className="absolute inset-0 rounded-xl bg-gradient-to-r from-light-primary/20 to-light-secondary/20 dark:from-dark-primary/20 dark:to-dark-secondary/20 opacity-0"
-                                whileHover={{ opacity: 1 }}
-                                transition={{ duration: 0.2 }}
-                            />
-                        </motion.button>
-                    </motion.div>
+        <button
+          type="button"
+          className="cursor-pointer rounded-md p-2 text-light-text-secondary md:hidden dark:text-dark-text-secondary"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle menu"
+        >
+          {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="overflow-hidden border-t border-light-border bg-light-background md:hidden dark:border-dark-border dark:bg-dark-background"
+          >
+            <div className="space-y-1 px-4 py-4">
+              {navLinks.map((link) => (
+                <button
+                  key={link.href}
+                  type="button"
+                  onClick={() => scrollToSection(link.href)}
+                  className={`block w-full cursor-pointer rounded-md px-3 py-3 text-left text-sm font-medium ${
+                    activeSection === link.href
+                      ? 'bg-light-accent-soft text-light-primary dark:bg-dark-accent-soft dark:text-dark-primary'
+                      : 'text-light-text-secondary dark:text-dark-text-secondary'
+                  }`}
+                >
+                  {link.label}
+                </button>
+              ))}
+              <div className="mt-3 flex items-center justify-between border-t border-light-border pt-3 dark:border-dark-border">
+                <span className="text-sm text-light-text-secondary dark:text-dark-text-secondary">
+                  {t('language')} / {theme === 'light' ? t('lightMode') : t('darkMode')}
+                </span>
+                <div className="flex gap-2">
+                  <LanguageToggle />
+                  <ThemeToggle />
                 </div>
+              </div>
             </div>
-
-            {/* Enhanced Mobile Navigation */}
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0, y: -20 }}
-                        animate={{ opacity: 1, height: 'auto', y: 0 }}
-                        exit={{ opacity: 0, height: 0, y: -20 }}
-                        transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        className="md:hidden overflow-hidden bg-light-background/98 dark:bg-dark-background/98 backdrop-blur-xl border-t border-light-border/30 dark:border-dark-border/30 shadow-2xl"
-                    >
-                        <motion.div 
-                            className="px-6 pt-6 pb-8 space-y-4"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.1 }}
-                        >
-                            {/* Navigation Links with stagger animation */}
-                            <div className="space-y-2">
-                                {navLinks.map((link, index) => (
-                                    <motion.button
-                                        key={link.href}
-                                        onClick={() => scrollToSection(link.href)}
-                                        className={`w-full text-left block px-4 py-4 rounded-xl text-base font-medium transition-all duration-300 ${activeSection === link.href
-                                            ? 'bg-gradient-to-r from-light-primary/15 to-light-secondary/15 dark:from-dark-primary/15 dark:to-dark-secondary/15 text-light-primary dark:text-dark-primary shadow-lg border border-light-primary/20 dark:border-dark-primary/20'
-                                            : 'text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-muted/70 dark:hover:bg-dark-muted/70 hover:text-light-primary dark:hover:text-dark-primary'
-                                            }`}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: index * 0.1 }}
-                                        whileHover={{ scale: 1.02, x: 5 }}
-                                        whileTap={{ scale: 0.98 }}
-                                    >
-                                        <motion.span
-                                            className="block"
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            transition={{ delay: index * 0.1 + 0.2 }}
-                                        >
-                                            {link.label}
-                                        </motion.span>
-                                    </motion.button>
-                                ))}
-                            </div>
-
-                            {/* Enhanced Separator */}
-                            <motion.div 
-                                className="relative my-6"
-                                initial={{ scaleX: 0 }}
-                                animate={{ scaleX: 1 }}
-                                transition={{ delay: 0.4, duration: 0.3 }}
-                            >
-                                <div className="border-t border-gradient-to-r from-transparent via-light-border to-transparent dark:via-dark-border"></div>
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-light-primary/20 to-transparent dark:via-dark-primary/20 h-px"></div>
-                            </motion.div>
-
-                            {/* Enhanced Settings Section */}
-                            <motion.div 
-                                className="space-y-4"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.5 }}
-                            >
-                                <motion.div 
-                                    className="flex items-center justify-between px-4 py-3 rounded-xl bg-light-surface/50 dark:bg-dark-surface/50 hover:bg-light-muted/50 dark:hover:bg-dark-muted/50 transition-all duration-300 shadow-lg"
-                                    whileHover={{ scale: 1.02 }}
-                                >
-                                    <span className="text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary">
-                                        {t('language')}
-                                    </span>
-                                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                                        <LanguageToggle />
-                                    </motion.div>
-                                </motion.div>
-                                
-                                <motion.div 
-                                    className="flex items-center justify-between px-4 py-3 rounded-xl bg-light-surface/50 dark:bg-dark-surface/50 hover:bg-light-muted/50 dark:hover:bg-dark-muted/50 transition-all duration-300 shadow-lg"
-                                    whileHover={{ scale: 1.02 }}
-                                >
-                                    <div className="flex flex-col">
-                                        <span className="text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary">
-                                            {t('theme')}
-                                        </span>
-                                        <motion.span 
-                                            className="text-xs text-light-text-secondary/70 dark:text-dark-text-secondary/70"
-                                            key={theme} // Re-render when theme changes
-                                            initial={{ opacity: 0, y: 5 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ duration: 0.2 }}
-                                        >
-                                            {getThemeLabel(theme)}
-                                        </motion.span>
-                                    </div>
-                                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                                        <ThemeToggle />
-                                    </motion.div>
-                                </motion.div>
-                            </motion.div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </motion.nav>
-    )
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  )
 }
 
 export default Navbar

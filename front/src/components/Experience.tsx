@@ -2,190 +2,127 @@
 
 import { useTheme } from '@/contexts/ThemeContext'
 import { useTranslation } from 'next-i18next'
-import { FaBriefcase, FaGraduationCap } from 'react-icons/fa'
-import { MdWorkOutline } from 'react-icons/md'
+import { motion, useReducedMotion } from 'framer-motion'
+import { Briefcase, GraduationCap } from 'lucide-react'
+import { fadeRise, motionSafe } from '@/lib/motion'
 
 interface ExperienceItem {
-    id: number
-    title: string
-    company: string
-    period: string
-    description: string[]
-    type: 'work' | 'education'
+  id: number
+  title: string
+  company: string
+  period: string
+  description: string[]
+  type: 'work' | 'education'
 }
 
-const TimelineItem = ({ item, isLast, theme }: { item: ExperienceItem, isLast: boolean, theme: string }) => (
-    <div className="relative flex items-start mb-8">
-        {/* Línea vertical */}
-        {!isLast && (
-            <div className={`absolute left-4 top-8 w-0.5 h-full ${
-                theme === 'dark' ? 'bg-dark-border' : 'bg-light-border'
-            }`}></div>
-        )}
-
-        {/* Punto del timeline */}
-        <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mr-4 relative z-10 ${
-            theme === 'dark' ? 'bg-dark-primary' : 'bg-light-primary'
-        }`}>
-            <div className={`w-3 h-3 rounded-full ${
-                theme === 'dark' ? 'bg-dark-background' : 'bg-light-background'
-            }`}></div>
-        </div>
-
-        {/* Contenido */}
-        <div className={`flex-grow rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 ${
-            theme === 'dark' ? 'bg-dark-surface shadow-dark' : 'bg-light-background shadow-light'
-        }`}>
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                <h3 className={`text-xl font-semibold ${
-                    theme === 'dark' ? 'text-white' : 'text-gray-900'
-                }`}>{item.title}</h3>
-                <span className={`text-sm font-medium ${
-                    theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
-                }`}>{item.period}</span>
-            </div>
-            <h4 className={`text-lg mb-3 ${
-                theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-            }`}>{item.company}</h4>
-            <ul className="space-y-1">
-                {item.description.map((desc, index) => (
-                    <li key={`${item.id}-desc-${index}`} className={`flex items-start ${
-                        theme === 'dark' ? 'text-gray-400' : 'text-gray-700'
-                    }`}>
-                        <span className={`mr-2 mt-0.5 flex-shrink-0 ${
-                            theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
-                        }`}>•</span>
-                        {desc}
-                    </li>
-                ))}
-            </ul>
-        </div>
-    </div>
-)
-
 export default function Experience() {
-    const { theme } = useTheme()
-    const { t } = useTranslation('common')
+  const { theme } = useTheme()
+  const { t } = useTranslation('common')
+  const prefersReduced = useReducedMotion()
 
-    // Función para obtener datos traducidos de experiencia con número dinámico de descripciones
-    const getExperienceData = (id: number) => {
-        const descriptions = []
-        let descIndex = 1
-        
-        // Obtener todas las descripciones disponibles dinámicamente
-        while (true) {
-            const descKey = `experience_${id}_desc_${descIndex}`
-            const descValue = t(descKey)
-            
-            // Si la traducción devuelve la misma clave, significa que no existe
-            if (descValue === descKey) {
-                break
-            }
-            
-            descriptions.push(descValue)
-            descIndex++
-        }
-        
-        return {
-            title: t(`experience_${id}_title`),
-            company: t(`experience_${id}_company`),
-            period: t(`experience_${id}_period`),
-            description: descriptions
-        }
+  const getExperienceData = (id: number) => {
+    const descriptions: string[] = []
+    let descIndex = 1
+    while (true) {
+      const descKey = `experience_${id}_desc_${descIndex}`
+      const descValue = t(descKey)
+      if (descValue === descKey) break
+      descriptions.push(descValue)
+      descIndex++
     }
+    return {
+      title: t(`experience_${id}_title`),
+      company: t(`experience_${id}_company`),
+      period: t(`experience_${id}_period`),
+      description: descriptions,
+    }
+  }
 
-    const experiences: ExperienceItem[] = [
-        // Experiencia laboral (más reciente primero)
-        {
-            id: 1,
-            ...getExperienceData(1),
-            type: "work"
-        },
-        {
-            id: 2,
-            ...getExperienceData(2),
-            type: "work"
-        },
-        {
-            id: 3,
-            ...getExperienceData(3),
-            type: "work"
-        },
-        // Educación
-        {
-            id: 4,
-            ...getExperienceData(4),
-            type: "education"
-        },
-        {
-            id: 5,
-            ...getExperienceData(5),
-            type: "education"
-        }
-    ]
+  const experiences: ExperienceItem[] = [
+    { id: 1, ...getExperienceData(1), type: 'work' },
+    { id: 2, ...getExperienceData(2), type: 'work' },
+    { id: 3, ...getExperienceData(3), type: 'work' },
+    { id: 4, ...getExperienceData(4), type: 'education' },
+    { id: 5, ...getExperienceData(5), type: 'education' },
+  ]
 
-    const workExperience = experiences.filter(exp => exp.type === 'work')
-    const education = experiences.filter(exp => exp.type === 'education')
+  const workExperience = experiences.filter((exp) => exp.type === 'work')
+  const education = experiences.filter((exp) => exp.type === 'education')
 
-    return (
-        <section id="experience" className={`min-h-screen py-20 px-4 transition-all duration-500 scroll-mt-20 flex items-center ${
-            theme === 'dark' ? 'bg-dark-background' : 'bg-light-background'
-        }`}>
-            <div className="max-w-4xl mx-auto">
-                <div className="text-center mb-16">
-                    <h2 className={`text-4xl font-bold mb-4 flex items-center justify-center gap-3 ${
-                        theme === 'dark' ? 'text-white' : 'text-gray-900'
-                    }`}>
-                        <MdWorkOutline className="text-blue-600 dark:text-blue-400" />
-                        {t('experience_title')}
-                    </h2>
-                    <p className={`text-xl max-w-2xl mx-auto ${
-                        theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-                    }`}>
-                        {t('experience_subtitle')}
-                    </p>
-                </div>
+  const Timeline = ({ items }: { items: ExperienceItem[] }) => (
+    <ol className="relative space-y-10 border-l border-light-border pl-8 dark:border-dark-border">
+      {items.map((item, index) => (
+        <motion.li
+          key={item.id}
+          {...(prefersReduced ? {} : motionSafe)}
+          variants={fadeRise}
+          className="relative"
+        >
+          <span
+            className={`absolute -left-[2.4rem] top-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-light-primary bg-light-background dark:border-dark-primary dark:bg-dark-background ${
+              index === 0 ? 'ring-4 ring-light-accent-soft dark:ring-dark-accent-soft' : ''
+            }`}
+            aria-hidden
+          />
+          <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-4">
+            <h4 className="font-display text-xl font-semibold text-light-text-primary dark:text-dark-text-primary">
+              {item.title}
+            </h4>
+            <span className="shrink-0 text-sm font-medium text-light-primary dark:text-dark-primary">
+              {item.period}
+            </span>
+          </div>
+          <p className="mt-1 text-base text-light-text-secondary dark:text-dark-text-secondary">
+            {item.company}
+          </p>
+          <ul className="mt-4 space-y-2">
+            {item.description.map((desc, i) => (
+              <li
+                key={`${item.id}-d-${i}`}
+                className="flex gap-2 text-light-text-secondary dark:text-dark-text-secondary"
+              >
+                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-light-primary dark:bg-dark-primary" />
+                <span>{desc}</span>
+              </li>
+            ))}
+          </ul>
+        </motion.li>
+      ))}
+    </ol>
+  )
 
-                {/* Experiencia Laboral */}
-                <div className="mb-16">
-                    <h3 className={`text-2xl font-bold mb-8 text-center flex items-center justify-center gap-2 ${
-                        theme === 'dark' ? 'text-white' : 'text-gray-900'
-                    }`}>
-                        <FaBriefcase className="text-blue-600 dark:text-blue-400" />
-                        {t('experience_work_title')}
-                    </h3>
-                    <div className="relative">
-                        {workExperience.map((item, index) => (
-                            <TimelineItem
-                                key={item.id}
-                                item={item}
-                                isLast={index === workExperience.length - 1}
-                                theme={theme}
-                            />
-                        ))}
-                    </div>
-                </div>
+  return (
+    <section
+      id="experience"
+      className={`scroll-mt-20 px-4 py-20 transition-colors ${
+        theme === 'dark' ? 'bg-dark-background' : 'bg-light-background'
+      }`}
+    >
+      <div className="mx-auto max-w-3xl">
+        <div className="mb-14">
+          <h2 className="section-heading flex items-center gap-3">
+            <Briefcase className="h-7 w-7 text-light-primary dark:text-dark-primary" aria-hidden />
+            {t('experience_title')}
+          </h2>
+          <p className="section-lede">{t('experience_subtitle')}</p>
+        </div>
 
-                {/* Educación */}
-                <div>
-                    <h3 className={`text-2xl font-bold mb-8 text-center flex items-center justify-center gap-2 ${
-                        theme === 'dark' ? 'text-white' : 'text-gray-900'
-                    }`}>
-                        <FaGraduationCap className="text-green-600 dark:text-green-400" />
-                        {t('experience_education_title')}
-                    </h3>
-                    <div className="relative">
-                        {education.map((item, index) => (
-                            <TimelineItem
-                                key={item.id}
-                                item={item}
-                                isLast={index === education.length - 1}
-                                theme={theme}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </section>
-    )
+        <div className="mb-16">
+          <h3 className="mb-8 flex items-center gap-2 text-lg font-medium text-light-text-primary dark:text-dark-text-primary">
+            <Briefcase className="h-5 w-5 text-light-primary dark:text-dark-primary" aria-hidden />
+            {t('experience_work_title')}
+          </h3>
+          <Timeline items={workExperience} />
+        </div>
+
+        <div>
+          <h3 className="mb-8 flex items-center gap-2 text-lg font-medium text-light-text-primary dark:text-dark-text-primary">
+            <GraduationCap className="h-5 w-5 text-light-primary dark:text-dark-primary" aria-hidden />
+            {t('experience_education_title')}
+          </h3>
+          <Timeline items={education} />
+        </div>
+      </div>
+    </section>
+  )
 }

@@ -56,13 +56,11 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
                 document.documentElement.classList.remove('light', 'dark')
                 document.documentElement.classList.add(savedTheme)
             } else {
-                // Detectar preferencia del sistema
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-                const initialTheme = prefersDark ? 'dark' : 'light'
-                setTheme(initialTheme)
+                // Primary experience is light (DESIGN.md); dark is polish/toggle
+                setTheme('light')
                 document.documentElement.classList.remove('light', 'dark')
-                document.documentElement.classList.add(initialTheme)
-                localStorage.setItem('theme', initialTheme)
+                document.documentElement.classList.add('light')
+                localStorage.setItem('theme', 'light')
             }
         }
         setIsLoading(false)
@@ -71,10 +69,8 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     // Evitar hydration mismatch
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-white dark:bg-gray-900">
-                <div className="flex items-center justify-center h-screen">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-                </div>
+            <div className="flex min-h-screen items-center justify-center bg-light-background dark:bg-dark-background">
+                <div className="h-10 w-10 animate-spin rounded-full border-2 border-light-border border-t-light-primary dark:border-dark-border dark:border-t-dark-primary" />
             </div>
         )
     }

@@ -12,26 +12,25 @@ export default function Home() {
   const router = useRouter()
   const { locale } = router
 
-  // Datos estructurados combinados
   const structuredData = {
     '@context': 'https://schema.org',
     '@graph': [
       getPersonStructuredData(locale),
       getWebsiteStructuredData(locale),
-      getPortfolioStructuredData(locale)
-    ]
+      getPortfolioStructuredData(locale),
+    ],
   }
 
   return (
     <>
       <SEO structuredData={structuredData} />
-      <main>
+      <div>
         <Hero />
-        <Projects />        
-        <Skills />
         <Experience />
-        <Contact /> 
-      </main>
+        <Projects />
+        <Skills />
+        <Contact />
+      </div>
     </>
   )
 }

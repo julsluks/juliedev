@@ -2,169 +2,122 @@
 
 import { useTheme } from '@/contexts/ThemeContext'
 import { useTranslation } from 'next-i18next'
-
-interface Project {
-    id: number
-    title: string
-    description: string
-    technologies: string[]
-    demoLink?: string
-    repoLink?: string
-    image?: string
-}
+import { motion, useReducedMotion } from 'framer-motion'
+import { ExternalLink, Github } from 'lucide-react'
+import { fadeRise, motionSafe } from '@/lib/motion'
 
 export default function Projects() {
-    const { theme } = useTheme()
-    const { t } = useTranslation('common')
+  const { theme } = useTheme()
+  const { t } = useTranslation('common')
+  const prefersReduced = useReducedMotion()
 
-    const projectsConfig = [
-        {
-            id: 1,
-            key: "1",
-            technologies: ["Vue", "Node.js", "MongoDB", "Firebase", "MySQL"],
-            demoLink: "https://drive.google.com/file/d/1y02Yq1GE_BuVvkM1OaHGyEYysEYibbRt/view?usp=sharing",
-            repoLink: "https://github.com/julsluks/trf-ConexusHub",
-            image: "/images/projects/conexus-hub.png" 
-        },
-        {
-            id: 2,
-            key: "2",
-            technologies: ["Vue.js", "Tailwind CSS", "Unity", "C#", "Python"],
-            demoLink: "https://www.youtube.com/watch?v=AOM92qPPtt0",
-            repoLink: "https://github.com/julsluks/tr-game-HighLink",
-            image: "/images/projects/high-link.png"
-        },
-        {
-            id: 3,
-            key: "3",
-            technologies: ["Phaser.js", "Laravel", "React", "Node.js", "Next.js"],
-            demoLink: "https://drive.google.com/file/d/1LBWqpKjoQKpaOUaVtSpKrkM9p9Om5a6i/view?usp=sharing",
-            repoLink: "https://github.com/julsluks/trf-ChromaticBond",
-            image: "/images/projects/chromatic-bond.png"
-        }   
-    ]
+  const projectsConfig = [
+    {
+      id: 1,
+      key: '1',
+      technologies: ['Vue', 'Node.js', 'MongoDB', 'Firebase', 'MySQL'],
+      demoLink:
+        'https://drive.google.com/file/d/1y02Yq1GE_BuVvkM1OaHGyEYysEYibbRt/view?usp=sharing',
+      repoLink: 'https://github.com/julsluks/trf-ConexusHub',
+      image: '/images/projects/conexus-hub.png',
+    },
+    {
+      id: 2,
+      key: '2',
+      technologies: ['Vue.js', 'Tailwind CSS', 'Unity', 'C#', 'Python'],
+      demoLink: 'https://www.youtube.com/watch?v=AOM92qPPtt0',
+      repoLink: 'https://github.com/julsluks/tr-game-HighLink',
+      image: '/images/projects/high-link.png',
+    },
+    {
+      id: 3,
+      key: '3',
+      technologies: ['Phaser.js', 'Laravel', 'React', 'Node.js', 'Next.js'],
+      demoLink:
+        'https://drive.google.com/file/d/1LBWqpKjoQKpaOUaVtSpKrkM9p9Om5a6i/view?usp=sharing',
+      repoLink: 'https://github.com/julsluks/trf-ChromaticBond',
+      image: '/images/projects/chromatic-bond.png',
+    },
+  ]
 
-    const getProjectData = (projectKey: string) => {
-        const title = t(`project_${projectKey}_title`)
-        const description = t(`project_${projectKey}_description`)
-        
-        return {
-            title,
-            description
-        }
-    }
+  return (
+    <section
+      id="projects"
+      className={`scroll-mt-20 px-4 py-20 transition-colors ${
+        theme === 'dark' ? 'bg-dark-surface' : 'bg-light-surface'
+      }`}
+    >
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-14">
+          <h2 className="section-heading">{t('projectsTitle')}</h2>
+          <p className="section-lede">{t('projectsDescription')}</p>
+        </div>
 
-    return (
-        <section id="projects" className={`min-h-screen py-8 px-4 transition-theme scroll-mt-20 flex items-center ${
-            theme === 'dark' ? 'bg-dark-surface' : 'bg-light-surface'
-        }`}>
-            <div className="max-w-6xl mx-auto">
-                <div className="text-center mb-16">
-                    <h2 className={`text-6xl font-bold mb-4 ${
-                        theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
-                    }`}>{t('projectsTitle')}</h2>
-                    <p className={`text-xl max-w-2xl mx-auto ${
-                        theme === 'dark' ? 'text-dark-text-secondary' : 'text-light-text-secondary'
-                    }`}>
-                        {t('projectsDescription')}
-                    </p>
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+          {projectsConfig.map((project) => {
+            const title = t(`project_${project.key}_title`)
+            const description = t(`project_${project.key}_description`)
+            return (
+              <motion.article
+                key={project.id}
+                {...(prefersReduced ? {} : motionSafe)}
+                variants={fadeRise}
+                className="flex flex-col border-t border-light-border pt-6 dark:border-dark-border"
+              >
+                <div className="mb-4 aspect-[16/10] overflow-hidden rounded-md bg-light-muted dark:bg-dark-muted">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={project.image}
+                    alt=""
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {projectsConfig.map((projectConfig) => {
-                        const projectData = getProjectData(projectConfig.key)
-                        return (
-                            <div key={projectConfig.id} className={`rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:transform hover:-translate-y-1 flex flex-col h-full ${
-                                theme === 'dark' ? 'bg-dark-background shadow-dark' : 'bg-light-background shadow-light'
-                            }`}>
-                                {/* Imagen del proyecto */}
-                                <div className={`h-48 flex items-center justify-center ${
-                                    theme === 'dark' ? 'bg-dark-muted' : 'bg-light-muted'
-                                }`}>
-                                    {projectConfig.image ? (
-                                        <img 
-                                            src={projectConfig.image} 
-                                            alt={projectData.title} 
-                                            className="w-full h-full object-cover" 
-                                        />
-                                    ) : (
-                                        <div className={`text-center ${
-                                            theme === 'dark' ? 'text-dark-text-muted' : 'text-light-text-muted'
-                                        }`}>
-                                            <div className="text-4xl mb-2">🖼️</div>
-                                            <p>Imagen del proyecto</p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* Contenido del proyecto */}
-                                <div className="p-6 flex flex-col flex-1">
-                                    <h3 className={`text-xl font-semibold mb-3 ${
-                                        theme === 'dark' ? 'text-dark-text-primary' : 'text-light-text-primary'
-                                    }`}>
-                                        {projectData.title}
-                                    </h3>
-                                    <p className={`mb-4 flex-1 ${
-                                        theme === 'dark' ? 'text-dark-text-secondary' : 'text-light-text-secondary'
-                                    }`}>
-                                        {projectData.description}
-                                    </p>
-
-                                    {/* Tecnologías - Fixed height container */}
-                                    <div className="mb-6 min-h-[60px] flex items-start">
-                                        <div className="flex flex-wrap gap-2">
-                                            {projectConfig.technologies.map((tech: string) => (
-                                                <span
-                                                    key={tech}
-                                                    className={`px-3 py-1.5 text-sm font-medium rounded-full whitespace-nowrap ${
-                                                        theme === 'dark' 
-                                                            ? 'bg-dark-primary/20 text-dark-primary' 
-                                                            : 'bg-light-primary/20 text-light-primary'
-                                                    }`}
-                                                >
-                                                    {tech}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Enlaces - Fixed at bottom */}
-                                    <div className="flex gap-3 mt-auto">
-                                        {projectConfig.demoLink && (
-                                            <a
-                                                href={projectConfig.demoLink}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className={`flex-1 px-4 py-2.5 rounded-lg transition-colors font-medium text-center text-sm ${
-                                                    theme === 'dark' 
-                                                        ? 'bg-dark-primary text-white hover:bg-dark-primary/80' 
-                                                        : 'bg-light-primary text-white hover:bg-light-primary/80'
-                                                }`}
-                                            >
-                                                {t('viewDemo')}
-                                            </a>
-                                        )}
-                                        {projectConfig.repoLink && (
-                                            <a
-                                                href={projectConfig.repoLink}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className={`flex-1 px-4 py-2.5 border rounded-lg transition-colors font-medium text-center text-sm ${
-                                                    theme === 'dark' 
-                                                        ? 'border-dark-border text-dark-text-primary hover:bg-dark-muted' 
-                                                        : 'border-light-border text-light-text-primary hover:bg-light-muted'
-                                                }`}
-                                            >
-                                                {t('viewCode')}
-                                            </a>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    })}
+                <h3 className="font-display text-xl font-semibold text-light-text-primary dark:text-dark-text-primary">
+                  {title}
+                </h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-light-text-secondary dark:text-dark-text-secondary">
+                  {description}
+                </p>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {project.technologies.map((tech) => (
+                    <li
+                      key={tech}
+                      className="rounded-full border border-light-border px-2.5 py-0.5 text-xs text-light-text-secondary dark:border-dark-border dark:text-dark-text-secondary"
+                    >
+                      {tech}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-5 flex gap-4">
+                  {project.demoLink && (
+                    <a
+                      href={project.demoLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-light-primary dark:text-dark-primary"
+                    >
+                      <ExternalLink className="h-4 w-4" aria-hidden />
+                      {t('viewDemo')}
+                    </a>
+                  )}
+                  {project.repoLink && (
+                    <a
+                      href={project.repoLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-light-text-secondary hover:text-light-primary dark:text-dark-text-secondary dark:hover:text-dark-primary"
+                    >
+                      <Github className="h-4 w-4" aria-hidden />
+                      {t('viewCode')}
+                    </a>
+                  )}
                 </div>
-            </div>
-        </section>
-    )
+              </motion.article>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
 }
