@@ -1,8 +1,17 @@
-# Local AI hub (symlinks to ~/personal)
-AGENTS.md
-CLAUDE.md
-PRODUCT.md
-.cursor/skills/
-.cursor/rules/hallmark.mdc
-.cursor/rules/design-orchestration.mdc
-.claude/skills/
+# OS / editor
+.DS_Store
+Thumbs.db
+*.pem
+
+# Env / secrets
+.env
+.env.*
+*.log
+
+# Dependencies / build (if run from repo root)
+node_modules/
+.next/
+out/
+dist/
+coverage/
+*.tsbuildinfo

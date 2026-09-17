@@ -1,71 +1,65 @@
-# Welcome to My Profile
+# Julie Villegas — Portfolio
 
-## 👋 About Me
+Personal portfolio site: [julievill.dev](https://julievill.dev)
 
-Hello, I'm **Julie Villegas**, a passionate **Full-Stack Developer** specialized in modern frameworks like React, Vue.js, and integration with Node.js and Laravel backends. I focus on creating dynamic and scalable web applications with cutting-edge technologies. I am committed to continuous learning, collaboration, and delivering high-quality solutions.
+Frontend-strong full-stack developer based in Barcelona / Vilassar de Mar (Catalonia, Spain). The site is a single-page portfolio with **es / en / ca**, light theme by default, and contact via form.
 
-## 🛠️ Technical Skills
+## Stack
 
-- **Languages**: JavaScript, Python, PHP, Java, and C#.
-- **Frameworks & Tools**: React, Vue.js, Next.js, Node.js, Express, Laravel.
-- **Specializations**: Full-Stack Development, API Design, Database Management.
+- **App**: Next.js 15 (Pages Router), React 19, TypeScript, Tailwind CSS  
+- **i18n**: next-i18next  
+- **Motion**: Framer Motion + CSS craft interactions  
+- **Deploy**: Vercel  
 
-## 💼 Professional Experience
+Application code lives in `front/`.
 
-### Full-Stack Developer - **ACCELERALIA**
-**February 2025 - June 2025**
+## Run locally
 
-- Fixed bugs in server-side applications to ensure proper operation.
-- Researched and evaluated new technologies for potential integration into existing projects.
-- Proposed and implemented technical improvements to optimize performance, scalability, and maintainability of systems.
-- Collaborated with the development team to adapt innovative solutions to project needs.
+```bash
+cd front
+npm install
+npm run dev
+```
 
-### Full-Stack Developer - **ASSOCIACIÓ CULTURAL STORYVILLE**
-**February 2024 - June 2024**
+Open [http://localhost:3000](http://localhost:3000).
 
-- Managed and maintained the organization's website.
-- Updated content, optimized user experience, and improved functionality.
-- Implemented technical solutions to ensure optimal performance.
-- Collaborated with the team to align the website with the association's cultural and communication objectives.
+## About
 
-## 📚 Education & Certifications
+Full-stack developer with a strong frontend focus: clean UI craft, usable web product work, and continuous learning. Hands-on with React, Vue.js, Next.js, Laravel, Livewire, SQL, and related tooling.
 
-### Higher Degree in Multiplatform Application Development (DAM)  
-**Technical School Center** | **2024 - 2025**
+## Experience (summary)
 
-- Object-oriented programming.
-- Mobile application development.
-- Database management.
+1. **Optima Retail** — Full-stack / Programadora · Jun 2026 – present  
+   Custom features with Laravel & Livewire, complex SQL for internal ops, technical ticket resolution.
 
-### Higher Degree in Web Application Development (DAW)  
-**Technical School Center** | **2022 - 2024**
+2. **Acceleralia** — Full-stack Developer · Dec 2024 – Jun 2025  
+   Performance work on Laravel backends for Vue/React apps, Docker in the workflow, mentoring and incident resolution.
 
-- Full-stack web development.
-- Databases and management systems.
-- Agile development methodologies.
+3. **Associació Cultural Storyville** — Front-End Developer · Dec 2023 – Jul 2024  
+   Site redesign/UX, inventory and payments integrations, API work for growth.
 
-## 📚 Notable Projects
+## Education
 
-### [Conexus Hub](#)
-A comprehensive educational platform designed to facilitate communication and management within the educational center. The project connects students, teachers, administrative/technical staff, and cafeteria services in a single modern and intuitive web platform.
+- CFGS DAM (Multiplatform) — 2024 – 2025  
+- CFGS DAW (Web) — 2022 – 2024  
 
-### [High Link](#)
-An exciting cooperative platform game where two players must work together to ascend through different levels. United by an elastic rope, each player controls a character with unique abilities, requiring precise coordination to overcome challenges.
+## Projects
 
-### [Chromatic Bond](#)
-A web game created with Phaser.js, challenging players to combine colors to progress through increasingly complex levels. With vibrant graphics and addictive gameplay, this project showcases my skills in game development and interactive design.
+- **Conexus Hub** — Educational platform (Vue, Node, MongoDB, Firebase, MySQL)  
+- **High Link** — Cooperative game (Vue, Unity, C#, Python)  
+- **Chromatic Bond** — Color web game (Phaser.js, Laravel, React, Next.js)  
 
-## 🎯 What I'm Looking For
+## Availability
 
-I am currently **available for new projects** and open to **freelance opportunities** or **full-time roles** in web development. I am particularly interested in working on innovative projects that involve **modern web technologies** and **collaborative environments**.
+Employed full-time: open to hearing about interesting roles (on-site, hybrid, or remote), **not** immediately available to start.
 
-## 🌐 Connect With Me
+## Links
 
-- **GitHub**: [My GitHub Profile](https://github.com/julsluks)
-- **LinkedIn**: [LinkedIn Profile](https://www.linkedin.com/in/julievillegas77/)
-- **Email**: [julievill77@gmail.com](mailto:julievill77@gmail.com)
-- **Portfolio**: [julievill.dev](https://julievill.dev)
+- Portfolio: [julievill.dev](https://julievill.dev)  
+- GitHub: [julsluks](https://github.com/julsluks)  
+- LinkedIn: [julie-villegas](https://linkedin.com/in/julie-villegas)  
+- Email: julievill77@gmail.com  
 
 ---
 
-*Last updated: February 19, 2026*
+*README aligned with the live portfolio content (2026-09).*
