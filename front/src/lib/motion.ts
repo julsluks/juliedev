@@ -1,11 +1,19 @@
 import type { Transition, Variants } from 'framer-motion'
 
+/** Matches DESIGN.md / CSS --motion-ease (sober craft). CSS-first for hover microinteractions. */
 export const craftEase = [0.22, 1, 0.36, 1] as const
 
 export const craftTransition: Transition = {
   duration: 0.28,
   ease: craftEase,
 }
+
+/** CSS class names for recruiter-scan craft (002). Prefer these over Framer for hover/focus. */
+export const craftClasses = {
+  imageLift: 'craft-image-lift',
+  linkDraw: 'craft-link-draw',
+  avatar: 'hero-avatar',
+} as const
 
 export const fadeRise: Variants = {
   hidden: { opacity: 0, y: 12 },

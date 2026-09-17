@@ -3,7 +3,7 @@
 import { useTranslation } from 'next-i18next'
 import { useTheme } from '@/contexts/ThemeContext'
 import { motion, useReducedMotion } from 'framer-motion'
-import { fadeRise, motionSafe } from '@/lib/motion'
+import { fadeRise, motionSafe, staggerChildren } from '@/lib/motion'
 
 const frontend = [
   'React',
@@ -18,6 +18,15 @@ const frontend = [
 const backend = ['Laravel', 'Livewire', 'Node.js', 'PHP', 'MySQL', 'SQL', 'MongoDB']
 const tools = ['Docker', 'Git', 'GitHub', 'Figma', 'Cloudflare', 'Herd', 'Jira']
 const ai = ['Claude', 'Cursor', 'Spec Kit', 'OpenSpec', 'n8n']
+
+const chipVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] as const },
+  },
+}
 
 export default function Skills() {
   const { t } = useTranslation('common')
@@ -54,16 +63,23 @@ export default function Skills() {
               <h3 className="mb-4 text-sm font-medium uppercase tracking-[0.14em] text-light-primary dark:text-dark-primary">
                 {group.title}
               </h3>
-              <ul className="flex flex-wrap gap-2">
+              <motion.ul
+                className="flex flex-wrap gap-2.5"
+                variants={prefersReduced ? undefined : staggerChildren}
+                initial={prefersReduced ? false : 'hidden'}
+                whileInView={prefersReduced ? undefined : 'visible'}
+                viewport={{ once: true, amount: 0.2 }}
+              >
                 {group.items.map((skill) => (
-                  <li
+                  <motion.li
                     key={skill}
-                    className="rounded-md border border-light-border bg-light-surface px-3 py-1.5 text-sm text-light-text-primary dark:border-dark-border dark:bg-dark-surface dark:text-dark-text-primary"
+                    variants={prefersReduced ? undefined : chipVariants}
+                    className="craft-skill-chip"
                   >
                     {skill}
-                  </li>
+                  </motion.li>
                 ))}
-              </ul>
+              </motion.ul>
             </motion.div>
           ))}
         </div>

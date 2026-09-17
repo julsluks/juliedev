@@ -64,12 +64,14 @@ export default function Projects() {
                 variants={fadeRise}
                 className="flex flex-col border-t border-light-border pt-6 dark:border-dark-border"
               >
-                <div className="mb-4 aspect-[16/10] overflow-hidden rounded-md bg-light-muted dark:bg-dark-muted">
+                <div
+                  className="craft-image-lift mb-4 aspect-[16/10] bg-light-muted dark:bg-dark-muted"
+                  tabIndex={0}
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={project.image}
                     alt=""
-                    className="h-full w-full object-cover"
                     loading="lazy"
                   />
                 </div>
@@ -95,7 +97,7 @@ export default function Projects() {
                       href={project.demoLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-light-primary dark:text-dark-primary"
+                      className="craft-link-draw inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-light-primary dark:text-dark-primary"
                     >
                       <ExternalLink className="h-4 w-4" aria-hidden />
                       {t('viewDemo')}
@@ -106,7 +108,7 @@ export default function Projects() {
                       href={project.repoLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-light-text-secondary hover:text-light-primary dark:text-dark-text-secondary dark:hover:text-dark-primary"
+                      className="craft-link-draw inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-light-text-secondary hover:text-light-primary dark:text-dark-text-secondary dark:hover:text-dark-primary"
                     >
                       <Github className="h-4 w-4" aria-hidden />
                       {t('viewCode')}

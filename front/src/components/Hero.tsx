@@ -8,10 +8,14 @@ import { craftTransition, fadeRise, staggerChildren } from '@/lib/motion'
 import { CV_DOWNLOAD_NAME, CV_HREF, LINKEDIN_URL } from '@/lib/links'
 import { trackCvDownload, trackLinkedInClick } from '@/components/GoogleAnalytics'
 
+const AVATAR_CAT = '/images/avatar-cat.png'
+const AVATAR_COFFEE = '/images/avatar-coffee.png'
+
 const Hero = () => {
   const { t } = useTranslation('common')
   const prefersReduced = useReducedMotion()
   const [copied, setCopied] = useState(false)
+  const [avatarVisible, setAvatarVisible] = useState(true)
 
   const brandName = t('greeting').includes(',')
     ? t('greeting').split(',').slice(1).join(',').trim()
@@ -38,6 +42,8 @@ const Hero = () => {
       /* ignore */
     }
   }
+
+  const hideAvatar = () => setAvatarVisible(false)
 
   return (
     <section
@@ -67,12 +73,35 @@ const Hero = () => {
           animate="visible"
           className="flex flex-col gap-8"
         >
-          <motion.p
-            variants={fadeRise}
-            className="text-sm font-medium uppercase tracking-[0.18em] text-light-primary dark:text-dark-primary"
-          >
-            {t('experience_1_title')} · {t('experience_1_company')}
-          </motion.p>
+          <motion.div variants={fadeRise} className="flex flex-col items-start">
+            {avatarVisible ? (
+              <button type="button" className="hero-avatar" aria-label={t('avatarAriaLabel')}>
+                <span className="hero-avatar__stack">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={AVATAR_CAT}
+                    alt=""
+                    className="hero-avatar__img hero-avatar__img--default"
+                    width={72}
+                    height={72}
+                    onError={hideAvatar}
+                  />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={AVATAR_COFFEE}
+                    alt=""
+                    className="hero-avatar__img hero-avatar__img--alt"
+                    width={72}
+                    height={72}
+                    onError={hideAvatar}
+                  />
+                </span>
+              </button>
+            ) : null}
+            <p className="text-sm font-medium uppercase tracking-[0.18em] text-light-primary dark:text-dark-primary">
+              {t('experience_1_title')} · {t('experience_1_company')}
+            </p>
+          </motion.div>
 
           <motion.h1
             variants={fadeRise}
